@@ -1,0 +1,382 @@
+{
+  "items": [
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/60d24wfXkVzDSfLS6hyCjZ"
+      },
+      "followers": {
+        "href": null,
+        "total": 5375567
+      },
+      "genres": [
+        "big room",
+        "edm",
+        "pop",
+        "progressive house",
+        "south african pop",
+        "tropical house"
+      ],
+      "href": "https://api.spotify.com/v1/artists/60d24wfXkVzDSfLS6hyCjZ",
+      "id": "60d24wfXkVzDSfLS6hyCjZ",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/990f17c31b1cb4b4b2bc7b3d4780e2c9fd3a846a",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/80db1d349a07da1cdc4ef0ffa20deb08c4faa5e0",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/c0dc129d8a886a2c9bf487b826c3614a6630fb9c",
+          "width": 160
+        }
+      ],
+      "name": "Martin Garrix",
+      "popularity": 87,
+      "type": "artist",
+      "uri": "spotify:artist:60d24wfXkVzDSfLS6hyCjZ"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/64KEffDW9EtZ1y2vBYgq8T"
+      },
+      "followers": {
+        "href": null,
+        "total": 2422672
+      },
+      "genres": [
+        "brostep",
+        "progressive electro house"
+      ],
+      "href": "https://api.spotify.com/v1/artists/64KEffDW9EtZ1y2vBYgq8T",
+      "id": "64KEffDW9EtZ1y2vBYgq8T",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/f3dd808a2eff56552da545beb5b0fc5d3892817a",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/399ff9280695787d76901bfffdf3f200ec528b2b",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/fc97a60af055943a8f079deea5cc811873981fae",
+          "width": 160
+        }
+      ],
+      "name": "Marshmello",
+      "popularity": 92,
+      "type": "artist",
+      "uri": "spotify:artist:64KEffDW9EtZ1y2vBYgq8T"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/246dkjvS1zLTtiykXe5h60"
+      },
+      "followers": {
+        "href": null,
+        "total": 3328964
+      },
+      "genres": [
+        "pop",
+        "rap"
+      ],
+      "href": "https://api.spotify.com/v1/artists/246dkjvS1zLTtiykXe5h60",
+      "id": "246dkjvS1zLTtiykXe5h60",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/2ea5bde13cd67a16318e0f7fc6e2c37906ea6529",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/c7384d9a531d912fa413c6cc5b6f755824881b2c",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/d6e77d06a98dae03be57cff1e3e0980ba66b24a9",
+          "width": 160
+        }
+      ],
+      "name": "Post Malone",
+      "popularity": 95,
+      "type": "artist",
+      "uri": "spotify:artist:246dkjvS1zLTtiykXe5h60"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/0rTP0x4vRFSDbhtqcCqc8K"
+      },
+      "followers": {
+        "href": null,
+        "total": 54675
+      },
+      "genres": [
+        "contemporary mandopop"
+      ],
+      "href": "https://api.spotify.com/v1/artists/0rTP0x4vRFSDbhtqcCqc8K",
+      "id": "0rTP0x4vRFSDbhtqcCqc8K",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/8ca05d73a24f2ef935253b37568e0066940240a4",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/2304b315aa96ca7e58ec9559a68cda6e66bfe3e8",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/55b09284e9bc5c9f398d9fcc606352c82919164b",
+          "width": 160
+        }
+      ],
+      "name": "Ronghao Li",
+      "popularity": 57,
+      "type": "artist",
+      "uri": "spotify:artist:0rTP0x4vRFSDbhtqcCqc8K"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/2elBjNSdBE2Y3f0j1mjrql"
+      },
+      "followers": {
+        "href": null,
+        "total": 350919
+      },
+      "genres": [
+        "c-pop",
+        "contemporary mandopop"
+      ],
+      "href": "https://api.spotify.com/v1/artists/2elBjNSdBE2Y3f0j1mjrql",
+      "id": "2elBjNSdBE2Y3f0j1mjrql",
+      "images": [
+        {
+          "height": 563,
+          "url": "https://i.scdn.co/image/8a83a7db473a494498c0745ff7ffb88d0bf1a09a",
+          "width": 1000
+        },
+        {
+          "height": 360,
+          "url": "https://i.scdn.co/image/721a9d091a7479a03b865ccadb3813fe93012c42",
+          "width": 640
+        },
+        {
+          "height": 113,
+          "url": "https://i.scdn.co/image/77837987df6646d947f997ea1917fd2726dec3a2",
+          "width": 200
+        },
+        {
+          "height": 36,
+          "url": "https://i.scdn.co/image/d63621a6c62e265994d02bdc0d378b26376de82f",
+          "width": 64
+        }
+      ],
+      "name": "Jay Chou",
+      "popularity": 73,
+      "type": "artist",
+      "uri": "spotify:artist:2elBjNSdBE2Y3f0j1mjrql"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/1feoGrmmD8QmNqtK2Gdwy8"
+      },
+      "followers": {
+        "href": null,
+        "total": 178369
+      },
+      "genres": [
+        "tracestep"
+      ],
+      "href": "https://api.spotify.com/v1/artists/1feoGrmmD8QmNqtK2Gdwy8",
+      "id": "1feoGrmmD8QmNqtK2Gdwy8",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/b6c0d57f2ba36b573350d8f441d8293ed0195379",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/bfe4f155b22d91bc3c3ca3ec86d6cb049270298e",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/80731e8982d11ae7ade1d51d9cf6eb82d06d9676",
+          "width": 160
+        }
+      ],
+      "name": "Tobu",
+      "popularity": 61,
+      "type": "artist",
+      "uri": "spotify:artist:1feoGrmmD8QmNqtK2Gdwy8"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/6eUKZXaKkcviH0Ku9w2n3V"
+      },
+      "followers": {
+        "href": null,
+        "total": 21540154
+      },
+      "genres": [
+        "pop"
+      ],
+      "href": "https://api.spotify.com/v1/artists/6eUKZXaKkcviH0Ku9w2n3V",
+      "id": "6eUKZXaKkcviH0Ku9w2n3V",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/f0370da3f52161b07a461b4be9a64d0adbfb498d",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/e21f791b600f04f9dd8ad2b6d9b3304a82e048ca",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/f39b705ba6b1070c77bce4e9c21dff5bac96f21c",
+          "width": 160
+        }
+      ],
+      "name": "Ed Sheeran",
+      "popularity": 96,
+      "type": "artist",
+      "uri": "spotify:artist:6eUKZXaKkcviH0Ku9w2n3V"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/1GPoTgvXd5OqZMF1akOsV2"
+      },
+      "followers": {
+        "href": null,
+        "total": 19887
+      },
+      "genres": [
+        "c-pop",
+        "contemporary mandopop"
+      ],
+      "href": "https://api.spotify.com/v1/artists/1GPoTgvXd5OqZMF1akOsV2",
+      "id": "1GPoTgvXd5OqZMF1akOsV2",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/7b4716cac18d16a640949ba1e8260c06399d9356",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/dfc0ba0eea48b079eec19d802b96108c27289f8a",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/cb4f28a1a81b24c266af6ca42b56621ec48f0490",
+          "width": 64
+        }
+      ],
+      "name": "Yoga Lin",
+      "popularity": 53,
+      "type": "artist",
+      "uri": "spotify:artist:1GPoTgvXd5OqZMF1akOsV2"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/7k73EtZwoPs516ZxE72KsO"
+      },
+      "followers": {
+        "href": null,
+        "total": 818803
+      },
+      "genres": [
+        "j-pop",
+        "j-rock",
+        "visual kei"
+      ],
+      "href": "https://api.spotify.com/v1/artists/7k73EtZwoPs516ZxE72KsO",
+      "id": "7k73EtZwoPs516ZxE72KsO",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ee9ef7d2116ad72bf43918b39e7a3dfbf2816080",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/76c883f2e5a9274370eb2b735f1f199156ed1cf4",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/df48f898d52fa68ae33284f1019357c3e93026f3",
+          "width": 160
+        }
+      ],
+      "name": "ONE OK ROCK",
+      "popularity": 70,
+      "type": "artist",
+      "uri": "spotify:artist:7k73EtZwoPs516ZxE72KsO"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/2wX6xSig4Rig5kZU6ePlWe"
+      },
+      "followers": {
+        "href": null,
+        "total": 528668
+      },
+      "genres": [
+        "big room",
+        "deep big room",
+        "edm",
+        "electro house",
+        "progressive electro house",
+        "progressive house",
+        "tropical house"
+      ],
+      "href": "https://api.spotify.com/v1/artists/2wX6xSig4Rig5kZU6ePlWe",
+      "id": "2wX6xSig4Rig5kZU6ePlWe",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/3ec5e52347e9700541be941ef3f73c035074115d",
+          "width": 640
+        },
+        {
+          "height": 320,
+          "url": "https://i.scdn.co/image/ad1015abdc04bd1ddea1ebbeaef4f9db41033867",
+          "width": 320
+        },
+        {
+          "height": 160,
+          "url": "https://i.scdn.co/image/8c639ade4e78ce827cd04c0ad2c58edbcf35c23d",
+          "width": 160
+        }
+      ],
+      "name": "KSHMR",
+      "popularity": 73,
+      "type": "artist",
+      "uri": "spotify:artist:2wX6xSig4Rig5kZU6ePlWe"
+    }
+  ],
+  "total": 50,
+  "limit": 10,
+  "offset": 5,
+  "href": "https://api.spotify.com/v1/me/top/artists?limit=10&offset=5",
+  "previous": null,
+  "next": "https://api.spotify.com/v1/me/top/artists?limit=10&offset=15"
+}
