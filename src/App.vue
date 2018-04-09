@@ -4,7 +4,37 @@
       <!-- sign in button -->
       <button type="button" class="btn btn-danger" @click="sign_in">Sign In Baby</button>
       <button type="button" class="btn btn-info" @click="access_api">Pull that Data Baby</button>
-      <mod1 :myName="user_name"></mod1>
+
+      <div v-if="profile">
+        <mod1 :myName="profile.display_name"></mod1>
+        <img :src="profile.images[0].url" />
+        <p>
+        Profile URL: <a :href="profile.external_urls.spotify">{{ profile.external_urls.spotify }}</a> <br>
+        Country: {{ profile.country }} <br>
+        Followers: {{ profile.followers.total }} <br>
+        Subscription: {{ profile.product }}
+        </p>
+      </div>
+
+      <div v-if="top_artists">
+        <h3>Top 10 Artists</h3>
+        <ul>
+          <li v-for="artist in top_artists.items">
+            {{ artist.name }} <br>
+            <img :src="artist.images[1].url" />
+          </li>
+        </ul>
+      </div>
+
+      <div v-if="top_tracks">
+        <h3>Top 10 Tracks</h3>
+        <ul>
+          <li v-for="track in top_tracks.items">
+            {{ track.name }} <br>
+            <img :src="track.album.images[1].url" />
+          </li>
+        </ul>
+      </div>
   </div>
 </template>
 
@@ -16,7 +46,9 @@ export default {
   name: 'app',
   data () {
     return {
-        user_name: "",
+        profile: null,
+        top_artists: null,
+        top_tracks: null
     }
   },
   methods: {
@@ -37,7 +69,9 @@ export default {
                   'Authorization': 'Bearer ' + accessToken
               },
               success: data => {
-                  this.user_name = data.display_name;
+                console.log(data)
+                  this.profile = data;
+
               }
           });
           // top artists
@@ -47,7 +81,8 @@ export default {
                   'Authorization': 'Bearer ' + accessToken
               },
               success: data => {
-                  console.log(data);
+                  console.log("Top Artists", data);
+                  this.top_artists = data;
               }
           });
           // top tracks
@@ -57,7 +92,8 @@ export default {
                   'Authorization': 'Bearer ' + accessToken
               },
               success: data => {
-                  console.log(data);
+                  console.log("Top Tracks", data);
+                  this.top_tracks = data;
               }
           });
       },
