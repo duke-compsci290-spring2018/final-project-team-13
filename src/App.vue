@@ -82,7 +82,7 @@ export default {
   methods: {
       sign_in() {
           // redirect to login window in the backend
-          window.location = process.env.LOGIN_URL || 'http://localhost:8888/login';
+          window.location = process.env.LOGIN_URL || 'https://motif-back-end.herokuapp.com/login';
       },
       async access_api() {
           // parse the access token from the window
