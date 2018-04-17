@@ -35,4 +35,28 @@ npm start
 npm run dev
 ```
 
+## Deploy to Heroku
+
+``` bash
+heroku create mybackend
+# provide the environment with Spotify Client ID and SECRET
+
+heroku config:set SPOTIFY_CLIENT_ID=example_id
+
+heroku config:set SPOTIFY_CLIENT_SECRET=example_secret
+
+heroku config:set REDIRECT_URI=https://fathomless-inlet-73184.herokuapp.com/callback
+
+heroku config:set FRONTEND_URI=https://fathomless-inlet-73184.herokuapp.com/
+
+
+git push heroku master
+
+# start the back end server
+npm start
+
+# start the front end server
+npm run dev
+```
+
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
