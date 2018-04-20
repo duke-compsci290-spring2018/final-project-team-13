@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
+import Chart from 'chart.js'
 import $ from 'jquery';
 
 import Module1 from './component/module1.vue'

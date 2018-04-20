@@ -2,14 +2,8 @@
   <div id="app">
       <h1> Motif </h1>
       <!-- sign in button -->
-      <button type="button" class="btn btn-danger" @click="sign_in">Sign In Baby</button>
-      <button type="button" class="btn btn-info" @click="access_api">Pull that Data Baby</button>
-      <div id="options">
-          <b-form-select v-model="time_selected" :options="time_options" placeholder="cool" class="mb-3">
-              <option slot="first" :value="null" disabled>-- Time Period --</option>
-          </b-form-select>
-          <div>Selected: <strong>{{ time_selected }}</strong></div>
-      </div>
+      <button type="button" class="btn btn-outline-secondary" @click="sign_in">Sign In Baby</button>
+      <button type="button" class="btn btn-outline-secondary" @click="access_api">Pull that Data Baby</button>
 
       <!-- <div v-if="profile">
         <mod1 :myName="profile.display_name"></mod1>
@@ -32,7 +26,13 @@
         </ul>
       </div> -->
 
-      <avgfeat v-if="time_selected" :user_selected="time_selected" :audioFeatures_short="top_tracks_short_features" :audioFeatures_medium="top_tracks_medium_features" :audioFeatures_long="top_tracks_long_features"></avgfeat>
+      <avgfeat v-if="feat_ready" :user_selected="time_selected" :audioFeatures_short="top_tracks_short_features" :audioFeatures_medium="top_tracks_medium_features" :audioFeatures_long="top_tracks_long_features"></avgfeat>
+
+      <div id="options">
+          <b-form-select v-model="time_selected" :options="time_options" placeholder="cool" class="mb-3">
+              <option slot="first" :value="null" disabled>-- Time Period --</option>
+          </b-form-select>
+      </div>
 
       <div v-if="time_selected">
         <h3>Top 10 Tracks</h3>
@@ -72,6 +72,12 @@ export default {
         ]
     }
   },
+  computed: {
+      // if all the features are loaded
+      feat_ready: function() {
+          return this.top_tracks_short_features && this.top_tracks_medium_features && this.top_tracks_long_features
+      }
+  },
   watch: {
       time_selected: function(val) {
           if (val === 'short') this.top_tracks_display = this.top_tracks_short;
@@ -82,7 +88,8 @@ export default {
   methods: {
       sign_in() {
           // redirect to login window in the backend
-          window.location = process.env.LOGIN_URL || 'https://motif-back-end.herokuapp.com/login';
+          window.location = process.env.LOGIN_URL || "http://localhost:8888/login";
+        //   'https://motif-back-end.herokuapp.com/login';
       },
       async access_api() {
           // parse the access token from the window
@@ -117,7 +124,7 @@ export default {
         //   });
 
           // top tracks in short term
-          await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=10&offset=0' , {
+          await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=20&offset=0' , {
               method: 'GET',
               headers: {
                   'Authorization': 'Bearer ' + accessToken
@@ -130,7 +137,7 @@ export default {
           });
 
           // top tracks in medium term
-          await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10&offset=0' , {
+          await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=20&offset=0' , {
               method: 'GET',
               headers: {
                   'Authorization': 'Bearer ' + accessToken
@@ -143,7 +150,7 @@ export default {
           });
 
           // top tracks in long term
-          await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=10&offset=0' , {
+          await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=20&offset=0' , {
               method: 'GET',
               headers: {
                   'Authorization': 'Bearer ' + accessToken
@@ -213,7 +220,12 @@ export default {
 }
 </script>
 
-<style >
+<style>
+#app {
+    font-family: 'Josefin Sans', sans-serif;
+    text-align: center;
+}
+
 #options {
     margin-top: 30px;
     width: 30%;

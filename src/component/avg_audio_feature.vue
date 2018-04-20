@@ -1,7 +1,10 @@
 <template>
-    <div>
-        <h3>This is what your top tracks look like</h3>
-        <div id="chart"></div>
+    <div id="body">
+        <h3>This is what your top 20 tracks look like in...</h3>
+        <!-- canvas for chartjs -->
+        <div class="chart-container">
+            <canvas id="myChart"></canvas>
+        </div>
          <!-- <button type="button" class="btn btn-danger" @click="analyze_features(), draw_graph()">Analyze</button> -->
          <div id="wrapper">
             <ul v-if="avg_features != null">
@@ -14,7 +17,6 @@
 </template>
 
 <script>
-import * as d3 from "d3";
 
 export default {
     props: ['user_selected', 'audioFeatures_short', 'audioFeatures_medium', 'audioFeatures_long'],
@@ -24,22 +26,19 @@ export default {
             features_medium: this.audioFeatures_medium,
             features_long: this.audioFeatures_long,
             avg_features: null,
-            graph_height: null,
             dataset_index: 0
         }
     },
     mounted() {
         this.set_dataset_index();
         this.analyze_features();
-        this.pack_features();
+        this.pack_data();
         this.draw_graph();
     },
     watch: {
         user_selected: function() {
             // once time period has been changed, change the graph accordingly
             this.set_dataset_index();
-            // this.graph_transition();
-            this.draw_graph();
         }
     },
     methods: {
@@ -82,157 +81,175 @@ export default {
 
             return avg_feat;
         },
-        pack_features() {
+        pack_data() {
             let short = this.analyze_features("short");
             let medium = this.analyze_features("medium");
             let long = this.analyze_features("long");
             this.avg_features = [short, medium, long];
         },
         draw_graph() {
-            d3.select("#chart > *").remove();
-            // list of features
-            var types = this.avg_features[0].map(feat => {
-                return feat.type
+            var ctx = document.getElementById('myChart').getContext("2d");
+            // labels for the charts: what type of feature
+            let label_data = this.avg_features[0].map(data => {return data.type});
+            // datasets for the charts
+            let short_data = this.avg_features[0].map(data => {return data.point});
+            let medium_data = this.avg_features[1].map(data => {return data.point});
+            let long_data = this.avg_features[2].map(data => {return data.point});
+            // common config
+            let tension = 0;
+            let bWidth = 2;
+            let bJoinStyle = 'round';
+            let pStyle = 'rectRounded';
+            let pRadius = 4;
+            let pHoverRadius = 6;
+            let pHoverBorderWidth = 10;
+            // config for gradient
+            let x = 370;
+            let y = 200;
+            let alpha = 0.2;
+            // gradient
+            var gradientStroke1 = ctx.createRadialGradient(x, y, 0, x, y, 200);
+            gradientStroke1.addColorStop(0, '#80b6f4');
+            gradientStroke1.addColorStop(1, '#f49080');
+            var gradientFill1 = ctx.createRadialGradient(x, y, 0, x, y, 200);
+            gradientFill1.addColorStop(0, "rgba(128, 182, 244, "+ alpha +")");
+            gradientFill1.addColorStop(1, "rgba(244, 144, 128, "+ alpha +")");
+            var gradientStroke2 = ctx.createRadialGradient(x, y, 0, x, y, 200);
+            gradientStroke2.addColorStop(0, '#bce784');
+            gradientStroke2.addColorStop(1, '#348aa7');
+            var gradientFill2 = ctx.createRadialGradient(x, y, 0, x, y, 200);
+            gradientFill2.addColorStop(0, "rgba(188, 231, 132, "+ alpha +")");
+            gradientFill2.addColorStop(1, "rgba(52, 138, 167, "+ alpha +")");
+            var gradientStroke3 = ctx.createRadialGradient(x, y, 0, x, y, 200);
+            gradientStroke3.addColorStop(0, '#a8dadc');
+            gradientStroke3.addColorStop(1, '#1d3557');
+            var gradientFill3 = ctx.createRadialGradient(x, y, 0, x, y, 200);
+            gradientFill3.addColorStop(0, "rgba(168, 218, 220, "+ alpha +")");
+            gradientFill3.addColorStop(1, "rgba(29, 53, 87, "+ alpha +")");
+            // data sets:
+            let dataset1 = {
+                label: "short term",
+                data: short_data,
+                backgroundColor: gradientFill1,
+                // "rgba(93, 211, 158, 0.2)",
+                lineTension: tension,
+                borderColor: gradientStroke1,
+                // "rgba(93, 211, 158, 0.8)",
+                borderWidth: bWidth,
+                borderJoinStyle: bJoinStyle,
+                pointStyle: pStyle,
+                pointRadius: pRadius,
+                pointBackgroundColor: gradientFill1,
+                pointBorderColor: gradientStroke1,
+                pointHoverRadius: pHoverRadius,
+                pointHoverWidth: pHoverBorderWidth,
+                pointHoverBackgroundColor:gradientFill1,
+                pointHoverBorderColor:gradientStroke1,
+            };
+            let dataset2 = {
+                label: "medium term",
+                data: medium_data,
+                backgroundColor: gradientFill2,
+                lineTension: tension,
+                borderColor: gradientStroke2,
+                borderWidth: bWidth,
+                borderJoinStyle: bJoinStyle,
+                pointStyle: pStyle,
+                pointRadius: pRadius,
+                pointBackgroundColor: gradientFill2,
+                pointBorderColor: gradientStroke2,
+                pointHoverRadius: pHoverRadius,
+                pointHoverWidth: pHoverBorderWidth,
+                pointHoverBackgroundColor:gradientFill2,
+                pointHoverBorderColor:gradientStroke2,
+            };
+            let dataset3 = {
+                label: "long term",
+                data: long_data,
+                backgroundColor: gradientFill3,
+                lineTension: tension,
+                borderColor: gradientStroke3,
+                borderWidth: bWidth,
+                borderJoinStyle: bJoinStyle,
+                pointStyle: pStyle,
+                pointRadius: pRadius,
+                pointBackgroundColor: gradientFill3,
+                pointBorderColor: gradientStroke3,
+                pointHoverRadius: pHoverRadius,
+                pointHoverWidth: pHoverBorderWidth,
+                pointHoverBackgroundColor:gradientFill3,
+                pointHoverBorderColor:gradientStroke3,
+            };
+            let datasetCollection = [dataset1, dataset2, dataset3];
+
+            var myRadarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: label_data,
+                    datasets: [{label: "placeholder"}],
+                },
+                options: {
+                    responsive: true,
+                    scale: {
+                        ticks: {
+                            beginAtZero: true,
+                            min: 0,
+                            max: 10,
+                            stepSize: 2,
+                        },
+                        pointLabels: {
+                            fontSize: 16,
+                        }
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            fontSize: 16,
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeInOutBounce',
+                    }
+                }
             });
-            // width and height of svg element
-            var fullWidth = 500;
-            var fullHeight = 350;
-            // width and height of the bar chart
-            var margin = {top: 5, right: 5, bottom: 50, left: 50};
-            var width = fullWidth - margin.left - margin.right;
-            var height = fullHeight - margin.top - margin.bottom;
-            this.graph_height = height;
-            // var color = d3.scale.category20();
 
-            var svg = d3.select('#chart').append('svg')
-            .attr('width', fullWidth)
-            .attr('height', fullHeight)
-            // g is the where the chart will be drawn
-            .append('g')
-            // leave room for top and left of the graph
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+            function intervalWrapper() {
+                let index = 1;
+                // immediately add the first dataset
+                myRadarChart.data.datasets[0] = datasetCollection[0];
+                myRadarChart.update();
+                // then add the rest of the datasets
+                var addData = setInterval(function() {
+                    if(index < datasetCollection.length) {
+                        myRadarChart.data.datasets[index] = datasetCollection[index];
+                        myRadarChart.update();
+                    } else {
+                        clearInterval(addData);
+                    }
+                    index++;
+                }, 1000);
+            };
 
-            // x value are the different features of audio
-            var feature_scale = d3.scaleBand()
-                                .domain(types)
-                                .range([0, width])
-                                .paddingInner(0.3);
-
-            // the width of each bar
-            var bandwidth = feature_scale.bandwidth();
-
-            // y value indicating the points on different features
-            var max_point = 10;
-            var point_scale = d3.scaleLinear()
-                                .domain([0, max_point])
-                                .range([height, 0])
-                                // rounding extreme values
-                                .nice();
-
-            // set x and y axis
-            var xAxis = d3.axisBottom(feature_scale);
-            var yAxis = d3.axisLeft(point_scale);
-
-            // draw x and y axis
-            var xAxisEle = svg.append('g')
-                .classed('x axis', true)
-                .attr('transform', 'translate(0,' + height + ')')
-                .call(xAxis);
-
-            var yAxisEle = svg.append('g')
-                .classed('y axis', true)
-                .call(yAxis);
-
-            // label the axis
-            var yText = xAxisEle.append('text')
-                        .attr('transform', 'translate('+ width/2 +', 40)')
-                        .style('text-anchor', 'middle')
-                        .style('fill', 'black')
-                        .attr('dx', '-10mm')
-                        .style('font-size', 14)
-                        .text('Feature');
-
-            var yText = yAxisEle.append('text')
-                      .attr('transform', 'rotate(-90)translate(-' + height/2 + ',0)')
-                      .style('text-anchor', 'middle')
-                      .style('fill', 'black')
-                      .attr('dy', '-6mm')
-                      .style('font-size', 14)
-                      .text('Point');
-
-            var barHolder = svg.append('g')
-                    .classed('bar-holder', true);
-
-            function color_scheme(i) {
-                let max_count = 0;
-                types.forEach(t => max_count++)
-                return (d3.interpolateWarm(i/max_count));
-            }
-            // draw the bars
-            var bars = barHolder.selectAll('rect.bar')
-                        .data(this.avg_features[this.dataset_index])
-                        .enter()
-                        .append('rect')
-                        .classed('bar', true)
-                        .attr('x', function(d, i) {
-                          return feature_scale(d.type);
-                        })
-                        .attr('width', bandwidth)
-                        .attr('y', function(d) {
-                          return point_scale(d.point);
-                        })
-                        .attr('height', function(d) {
-                          // the bar's height should align it with the base of the chart (y=0)
-                          return height - point_scale(d.point);
-                        })
-                        .attr('fill', function(d, i){return color_scheme(i)})
-                        .append("text")
-                        .text(function(d){
-                            console.log(d.point)
-                            return d.point})
-                        .attr("text-anchor", "middle")
-                        .attr('x', function(d, i) {
-                          return feature_scale(d.type);
-                        })
-                        .attr('y', function(d) {
-                          return point_scale(d.point)-20;
-                        })
-                        .attr("font-family", "sans-serif")
-                        .attr("font-size", "11px")
-                        .attr("fill", "red");
-
-
-
+            intervalWrapper();
         },
-        graph_transition() {
-            var point_scale = d3.scaleLinear()
-                                .domain([0, 10])
-                                .range([this.graph_height, 0])
-                                // rounding extreme values
-                                .nice();
-
-            d3.selectAll(".bar")
-                .transition()
-                // .attr("height", function(d) {
-                //     return this.graph_height - point_scale(d.point);
-                // })
-                // .attr("x", function(d) {
-                //     console.log(d);
-                // })
-                .attr("y", function(d) {
-                    return point_scale(d.point);
-                })
-                // .ease("linear")
-                // .select("title")
-                // .text(function(d) {
-                //
-                // });
-        },
-
     },
 }
 </script>
 
 <style>
+.body {
+    position: relative;
+}
 
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 60vh;
+    width: 100vh;
+}
+
+#wrapper ul{
+    list-style-type: none;
+}
 </style>
