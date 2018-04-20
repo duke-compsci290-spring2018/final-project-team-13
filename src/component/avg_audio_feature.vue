@@ -31,7 +31,6 @@ export default {
     },
     mounted() {
         this.set_dataset_index();
-        this.analyze_features();
         this.pack_data();
         this.draw_graph();
     },
@@ -246,7 +245,7 @@ export default {
     position: relative;
     margin: auto;
     height: 60vh;
-    width: 100vh;
+    width: 45vw;
 }
 
 #wrapper ul{

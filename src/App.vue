@@ -217,11 +217,11 @@ export default {
 
           // save the ids of top tracks into a string
           tracks_data.items.forEach(track => {
-              track_ids += "2C" + track.id + "%";
+              track_ids += track.id + "%2C";
           });
 
           //
-          track_ids = track_ids.substring(2, track_ids.length-1);
+          track_ids = track_ids.substring(0, track_ids.length-3);
 
           // get the audio features of top tracks
           await fetch('https://api.spotify.com/v1/audio-features?ids=' + track_ids, {
