@@ -5,34 +5,25 @@
       <button type="button" class="btn btn-outline-secondary" @click="sign_in">Sign In Baby</button>
       <button type="button" class="btn btn-outline-secondary" @click="access_api">Pull that Data Baby</button>
 
-      <!-- <div v-if="profile">
-        <mod1 :myName="profile.display_name"></mod1>
-        <img :src="profile.images[0].url" />
-        <p>
-        Profile URL: <a :href="profile.external_urls.spotify">{{ profile.external_urls.spotify }}</a> <br>
-        Country: {{ profile.country }} <br>
-        Followers: {{ profile.followers.total }} <br>
-        Subscription: {{ profile.product }}
-        </p>
-      </div>
-
-      <div v-if="top_artists">
-        <h3>Top 10 Artists</h3>
-        <ul>
-          <li v-for="artist in top_artists.items">
-            {{ artist.name }} <br>
-            <img :src="artist.images[1].url" />
-          </li>
-        </ul>
-      </div> -->
-
-      <avgfeat v-if="feat_ready" :user_selected="time_selected" :audioFeatures_short="top_tracks_short_features" :audioFeatures_medium="top_tracks_medium_features" :audioFeatures_long="top_tracks_long_features"></avgfeat>
+      <!-- <similarartists v-if="artists_ready" :user_selected="time_selected" :data_short="top_artists_short" :data_medium="top_artists_medium" :data_long="top_artists_long"></similarartists> -->
 
       <div id="options">
           <b-form-select v-model="time_selected" :options="time_options" placeholder="cool" class="mb-3">
               <option slot="first" :value="null" disabled>-- Time Period --</option>
           </b-form-select>
       </div>
+
+      <!-- <div v-if="artists_ready && time_selected">
+        <h3>Top 10 Artists</h3>
+        <ul>
+          <li class="artists" v-for="artist in top_artists_display.items">
+            <p> {{ artist.name }} </p> <br>
+            <img class="artist_image" :src="artist.images[1].url" />
+          </li>
+        </ul>
+      </div> -->
+
+      <avgfeat v-if="feat_ready" :user_selected="time_selected" :audioFeatures_short="top_tracks_short_features" :audioFeatures_medium="top_tracks_medium_features" :audioFeatures_long="top_tracks_long_features"></avgfeat>
 
       <div v-if="time_selected">
         <h3>Top 10 Tracks</h3>
@@ -49,14 +40,16 @@
 
 <script>
 import queryString from 'query-string';
-import $ from 'jquery';
 
 export default {
   name: 'app',
   data () {
     return {
         profile: null,
-        top_artists: null,
+        top_artists_display: null,
+        top_artists_short: null,
+        top_artists_medium: null,
+        top_artists_long: null,
         top_tracks_display: null,
         top_tracks_short: null,
         top_tracks_medium: null,
@@ -75,14 +68,26 @@ export default {
   computed: {
       // if all the features are loaded
       feat_ready: function() {
-          return this.top_tracks_short_features && this.top_tracks_medium_features && this.top_tracks_long_features
+          return this.top_tracks_short_features && this.top_tracks_medium_features && this.top_tracks_long_features;
+      },
+      artists_ready: function() {
+          return this.top_artists_short && this.top_tracks_medium && this.top_tracks_long;
       }
   },
   watch: {
       time_selected: function(val) {
-          if (val === 'short') this.top_tracks_display = this.top_tracks_short;
-          else if (val === 'medium') this.top_tracks_display = this.top_tracks_medium;
-          else this.top_tracks_display = this.top_tracks_long;
+          if (val === 'short') {
+              this.top_tracks_display = this.top_tracks_short;
+              this.top_artists_display = this.top_artists_short;
+          }
+          else if (val === 'medium') {
+              this.top_tracks_display = this.top_tracks_medium;
+              this.top_artists_display = this.top_artists_medium;
+          }
+          else {
+              this.top_tracks_display = this.top_tracks_long;
+              this.top_artists_display = this.top_artists_long;
+          }
       },
   },
   methods: {
@@ -110,18 +115,44 @@ export default {
               this.profile = data;
           });
 
-          // top artists
-        //   await fetch('https://api.spotify.com/v1/me/top/artists?time_range='+ this.time_selected +'&limit=10&offset=0' , {
-        //       method: 'GET',
-        //       headers: {
-        //           'Authorization': 'Bearer ' + accessToken
-        //       },
-        //   }).then(raw_data => {
-        //       return raw_data.json();
-        //   }).then(data => {
-        //       console.log("Top Track Short", data);
-        //       this.top_artists = data;
-        //   });
+          // top artists in short term
+          await fetch('https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=10&offset=0' , {
+              method: 'GET',
+              headers: {
+                  'Authorization': 'Bearer ' + accessToken
+              },
+          }).then(raw_data => {
+              return raw_data.json();
+          }).then(data => {
+              console.log("Top Track Short", data);
+              this.top_artists_short = data;
+          });
+
+          // top artists in medium term
+          await fetch('https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10&offset=0' , {
+              method: 'GET',
+              headers: {
+                  'Authorization': 'Bearer ' + accessToken
+              },
+          }).then(raw_data => {
+              return raw_data.json();
+          }).then(data => {
+              console.log("Top Track Short", data);
+              this.top_artists_medium = data;
+          });
+
+          // top artists in long term
+          await fetch('https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=10&offset=0' , {
+              method: 'GET',
+              headers: {
+                  'Authorization': 'Bearer ' + accessToken
+              },
+          }).then(raw_data => {
+              return raw_data.json();
+          }).then(data => {
+              console.log("Top Track Short", data);
+              this.top_artists_long = data;
+          });
 
           // top tracks in short term
           await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=20&offset=0' , {
@@ -243,6 +274,23 @@ export default {
 }
 
 .track_image {
+    margin-top: -25px;
+    margin-bottom: 25px;
+    width: 180px;
+}
+
+.artists {
+    text-align: center;
+    display: inline-grid;
+    margin-right: 50px;
+}
+
+.artists p{
+    margin: 0px;
+    width: 180px;
+}
+
+.artist_image {
     margin-top: -25px;
     margin-bottom: 25px;
     width: 180px;
