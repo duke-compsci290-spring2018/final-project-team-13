@@ -8,16 +8,16 @@
       <b-collapse is-nav id="nav_collapse">
 
         <b-navbar-nav>
-          <b-button class="btn-outline-success" v-if="" v-on:click="readCurrentUser">Read Current User State</b-button>
           <b-button v-on:click="refreshToken" class="btn-info">Request New Access Token</b-button>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
+          <img id="profile_picture" :src="profile_picture">
           <b-nav-item-dropdown right v-if="current_role == 'user' || current_role == 'admin'">
             <!-- Using button-content slot -->
             <template slot="button-content">
-              {{ current_role }}
+              <i class="fas fa-cog"></i>
             </template>
             <b-dropdown-item v-if="current_role == 'admin'" v-on:click="goAdmin">Admin Page</b-dropdown-item>
             <b-dropdown-item v-on:click="logout">Logout</b-dropdown-item>
@@ -47,6 +47,9 @@ export default {
   computed: {
       current_role() {
         return store.state.current_user.role
+      },
+      profile_picture() {
+        return store.state.current_user.profile_picture
       }
   },
   watch: {
@@ -60,12 +63,6 @@ export default {
     },
     goAdmin() {
       router.push({ name: "admin" })
-    },
-    readCurrentUser() {
-      console.log("> Current user: ", store.state.current_user)
-    },
-    readCurrentRole() {
-      console.log("> " + this.current_role)
     },
     logout() {
       // Reset current user state
@@ -123,38 +120,11 @@ a:hover {
   cursor: pointer;
 }
 
-.tracks {
-    text-align: center;
-    display: inline-grid;
-    margin-right: 50px;
-}
-
-.tracks p{
-    margin: 0px;
-    width: 180px;
-}
-
-.track_image {
-    margin-top: -25px;
-    margin-bottom: 25px;
-    width: 180px;
-}
-
-.artists {
-    text-align: center;
-    display: inline-grid;
-    margin-right: 50px;
-}
-
-.artists p{
-    margin: 0px;
-    width: 180px;
-}
-
-.artist_image {
-    margin-top: -25px;
-    margin-bottom: 25px;
-    width: 180px;
+#profile_picture {
+  max-width: 40px;
+  max-height: 40px;
+  border: 2px solid White;
+  border-radius: 15%;
 }
 
 .fade-enter-active, .fade-leave-active {

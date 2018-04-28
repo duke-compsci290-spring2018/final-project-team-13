@@ -8,7 +8,6 @@
           <b-button id="log_in" class="btn-success" v-if="sample_graph_loaded" @click="sign_in">
             Log In With Spotify <i class="fab fa-spotify"></i>
           </b-button>
-          <b-button class="btn-outline-success" v-if="" v-on:click="readCurrentUser">Read Current User State</b-button>
         </div>
     </b-container>
 </template>
@@ -59,9 +58,6 @@ export default {
     },
     clear_id() {
         if(localStorage.getItem("user_id") !== undefined) localStorage.removeItem("user_id");
-    },
-    readCurrentUser() {
-      console.log("> Current user: ", store.state.current_user)
     },
     sample_graph() {
 

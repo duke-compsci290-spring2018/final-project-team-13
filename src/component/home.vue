@@ -41,9 +41,6 @@
         See how your music tastes have evolved through time!
       </template>
     </b-jumbotron>
-
-    <b-button class="btn-outline-success" v-if="" v-on:click="readCurrentUser">Read Current User State</b-button>
-
   </b-container>
 
 </template>
@@ -69,9 +66,6 @@ export default {
   },
 
   methods: {
-    readCurrentUser() {
-      console.log("> Current user: ", store.state.current_user)
-    },
     updateCurrentUser(user) {
       store.commit('updateCurrentUser', user)
     }

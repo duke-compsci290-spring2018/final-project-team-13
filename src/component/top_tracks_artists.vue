@@ -185,4 +185,37 @@ export default {
 </script>
 
 <style>
+.tracks {
+    text-align: center;
+    display: inline-grid;
+    margin-right: 50px;
+}
+
+.tracks p{
+    margin: 0px;
+    width: 180px;
+}
+
+.track_image {
+    margin-top: -25px;
+    margin-bottom: 25px;
+    width: 180px;
+}
+
+.artists {
+    text-align: center;
+    display: inline-grid;
+    margin-right: 50px;
+}
+
+.artists p{
+    margin: 0px;
+    width: 180px;
+}
+
+.artist_image {
+    margin-top: -25px;
+    margin-bottom: 25px;
+    width: 180px;
+}
 </style>
