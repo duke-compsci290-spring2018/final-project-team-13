@@ -1,23 +1,21 @@
 <template>
   <div id="app">
 
-      <b-navbar sticky toggleable="md" type="dark" variant="dark">
-
+      <b-navbar sticky toggleable="sm" type="dark" variant="dark">
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-
         <b-navbar-brand>Motif</b-navbar-brand>
 
         <b-collapse is-nav id="nav_collapse">
 
           <b-navbar-nav>
-            <b-button v-if="user_id" v-on:click="readData">Read Data</b-button>
+            <b-button v-if="" v-on:click="readData">Read User Data</b-button>
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
-            <b-button v-if="current_user.role == 'guest'" v-on:click="">Register as User</b-button>
+            <b-button v-if="current_user_role == 'guest'" v-on:click="">Register as User</b-button>
 
-            <b-nav-item-dropdown right v-if="current_user.role == 'user' || current_user.role == 'admin'">
+            <b-nav-item-dropdown right v-if="current_user_role == 'user' || current_user_role == 'admin'">
               <!-- Using button-content slot -->
               <template slot="button-content">
                 <em>User</em>
@@ -30,47 +28,30 @@
         </b-collapse>
       </b-navbar>
 
-
-      <router-view>
-      </router-view>
+      <transition name="fade">
+        <router-view>
+        </router-view>
+      </transition>
 
   </div>
 </template>
 
 <script>
 import queryString from 'query-string'
-import Firebase from 'firebase'
-
-// Initialize Firebase
-var config = {
-  apiKey: process.env.FIREBASE_API_KEY || "",
-  authDomain: "motif-290.firebaseapp.com",
-  databaseURL: "https://motif-290.firebaseio.com",
-  projectId: "motif-290",
-  storageBucket: "motif-290.appspot.com",
-  messagingSenderId: "427568271492"
-}
-Firebase.initializeApp(config)
-
-const db = Firebase.database()
-const users_ref = db.ref("users")
+import { router, db, users_ref } from './main.js'
 
 export default {
   name: 'app',
   data () {
     return {
-      current_user: {
-        spotify_id: "",
-        profile_url: "",
-        display_name: "",
-        role: "anonymous"
-      }
+      current_user_id: "",
+      current_user_role: "anonymous",
+      is_logged_in: false
     }
   },
   computed: {
-      user_id() {
-          console.log(localStorage.getItem("user_id"));
-          return localStorage.getItem("user_id");
+      on_login_page() {
+
       }
   },
   watch: {
@@ -80,21 +61,24 @@ export default {
         console.log(this.user_id)
     },
     readData() {
-      let my_id = localStorage.getItem("user_id");
-      console.log(my_id);
-      users_ref.once("value").then(function(snapshot) {
-        snapshot.forEach(user => {
-            let spotify_id = user.child('spotifyID').val();
-            if(spotify_id === my_id) {
-                let role = user.child('role').val();
-                if(role === 'admin') this.current_user.role = 'admin';
-                else this.current_user.role = 'user';
-            }
-        })
-      });
+      let my_id = "1239569139"
+      db.ref("/users/" + my_id).once("value").then(function(snapshot) {
+        console.log(snapshot.val())
+      })
+
+      // users_ref.once("value").then(function(snapshot) {
+      //   snapshot.forEach(user => {
+      //       let spotify_id = user.child('spotifyID').val();
+      //       if(spotify_id === my_id) {
+      //           let role = user.child('role').val();
+      //           if(role === 'admin') this.current_user.role = 'admin';
+      //           else this.current_user.role = 'user';
+      //       }
+      //   })
+      // });
     }
   },
-  mounted() {
+  updated() {
 
   }
 }
@@ -151,5 +135,13 @@ a:hover {
     margin-top: -25px;
     margin-bottom: 25px;
     width: 180px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

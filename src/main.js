@@ -24,6 +24,20 @@ Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Vue.use(VueFire)
 
+// Initialize Firebase
+var config = {
+  apiKey: process.env.FIREBASE_API_KEY || "",
+  authDomain: "motif-290.firebaseapp.com",
+  databaseURL: "https://motif-290.firebaseio.com",
+  projectId: "motif-290",
+  storageBucket: "motif-290.appspot.com",
+  messagingSenderId: "427568271492"
+}
+Firebase.initializeApp(config)
+
+const db = Firebase.database()
+const users_ref = db.ref("users")
+
 const routes = [
   {
     path: "/",
@@ -68,4 +82,4 @@ new Vue({
   render: h => h(App), router
 })
 
-export default router;
+export { router, db, users_ref }

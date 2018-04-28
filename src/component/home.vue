@@ -54,7 +54,7 @@
 
 <script>
 import queryString from 'query-string';
-import router from '../main.js';
+import { router, db, users_ref } from '../main.js'
 
 export default {
   name: 'home',
@@ -83,6 +83,10 @@ export default {
 
     // redirect user to login if no access_token
     if (!access_token) {
+      // if no access token, but current user is still logged in, stay on home
+
+
+
       // redirect to login window in the backend
       window.location = process.env.LOGIN_URL || "http://localhost:8888/login";
     }
@@ -98,6 +102,8 @@ export default {
       alert("No localStorage capabilities!");
     }
 
+
+
     // personal info
     await fetch('https://api.spotify.com/v1/me' , {
         method: 'GET',
@@ -107,11 +113,35 @@ export default {
     }).then(raw_data => {
         return raw_data.json();
     }).then(data => {
-        console.log("Profile", data);
         this.profile = data;
+
         if (typeof(Storage) !== "undefined") {
           localStorage.setItem("user_id", data.id);
         }
+
+        // Update users db in Firebase
+        db.ref("/users/" + data.id).once("value").then(function(snapshot) {
+
+          if (!snapshot.val()) {
+            // New user
+            db.ref("/users/" + data.id).set({
+              display_name: data.display_name,
+              profile_picture : data.images[0].url,
+              role: "user",
+              country: data.country,
+              product: data.product,
+              followers: data.followers.total,
+              access_token: access_token,
+              refresh_token: refresh_token              
+            })
+
+          }
+          else {
+            console.log("User " + snapshot.val().display_name + " (" + data.id + ") exists already");
+
+          }
+        })
+
     });
 
   }

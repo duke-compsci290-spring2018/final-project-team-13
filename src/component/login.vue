@@ -1,12 +1,13 @@
 <template>
-    <div id="body">
+    <b-container fluid id="body">
         <div id="graph">
         </div>
-        <div id="slogan">
-            <h3>Know What You Listen To</h3>
-            <button v-if="sample_graph_loaded" id="log_in" type="button" class="btn btn-success" @click="sign_in">Log In With Spotify <i class="fab fa-spotify"></i></button>
+        <div id="overlay">
+          <h1>Motif</h1>
+          <h4>See what you're listening to</h4>
+          <b-button id="log_in" class="btn-success" v-if="sample_graph_loaded" @click="sign_in">Log In With Spotify <i class="fab fa-spotify"></i></b-button>
         </div>
-    </div>
+    </b-container>
 </template>
 
 <script>
@@ -32,7 +33,6 @@ export default {
     sign_in() {
           // redirect to login window in the backend
           window.location = process.env.LOGIN_URL || "http://localhost:8888/login";
-        //   'https://motif-back-end.herokuapp.com/login';
     },
     clear_id() {
         if(localStorage.getItem("user_id") !== undefined) localStorage.removeItem("user_id");
@@ -46,7 +46,6 @@ export default {
             nodes: {
                 mass: 1,
                 size: 35,
-                //  '<b>Fastback Networks</b> <br><br>' + 'Country: ' + 'USA' + '<br>' + 'City: ' + 'San Jose',
                 shadow: {
                     enabled: true,
                     size: 25,
@@ -130,26 +129,25 @@ export default {
 </script>
 
 <style>
+#body {
+  margin: 0;
+  padding: 0;
+}
+
 #graph {
-    margin-top: 0px;
-    width: 100vw;
-    height: 90vh;
-    margin-left: 0px;
-
+  width: 100vw;
+  height: 100vh;
 }
 
-#slogan {
-    position: fixed;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.5);
-    padding-bottom: 20px;
-    padding-top: 10px;
-    top:40%;
-    left:15%;
-    width: 70%;
+#overlay {
+  position: fixed;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7);
+  padding-bottom: 20px;
+  padding-top: 10px;
+  top: 40%;
+  left: 25%;
+  width: 50%;
 }
 
-#slogan h3 {
-    font-size: 40px;
-}
 </style>

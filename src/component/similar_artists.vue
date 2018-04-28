@@ -49,7 +49,7 @@ export default {
         },
         selected_data() {
             if(this.time_selected === 'short') return this.artists_short;
-            else if(this.tim_selected === 'medium') return this.artists_medium;
+            else if(this.time_selected === 'medium') return this.artists_medium;
             else return this.artists_long;
         },
         load_graph_condition() {
@@ -195,11 +195,6 @@ export default {
             this.lvl0_edges = e0;
             this.lvl1_edges = e1;
 
-            // console.log(this.lvl0_nodes);
-            // console.log(this.lvl1_nodes);
-            // console.log(this.lvl0_edges);
-            // console.log(this.lvl1_edges);
-
         },
         draw_graph() {
 
@@ -212,7 +207,6 @@ export default {
             this.options = {
                 nodes: {
                     mass: 1,
-                    //  '<b>Fastback Networks</b> <br><br>' + 'Country: ' + 'USA' + '<br>' + 'City: ' + 'San Jose',
                     shadow: {
                         enabled: true,
                         size: 25,
