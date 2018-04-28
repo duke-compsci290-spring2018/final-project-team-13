@@ -25,7 +25,8 @@
     "vis": "^4.21.0",
     "vue": "^2.5.11",
     "vue-router": "^3.0.1",
-    "vuefire": "^1.4.5"
+    "vuefire": "^1.4.5",
+    "vuex": "^3.0.1"
   },
   "browserslist": [
     "> 1%",

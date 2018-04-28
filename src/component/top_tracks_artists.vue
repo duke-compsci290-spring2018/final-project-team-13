@@ -42,6 +42,7 @@
 
 <script>
 import queryString from 'query-string';
+import { router, db, users_ref, store } from '../main.js'
 
 export default {
   name: 'top_tracks_artists',
@@ -93,11 +94,11 @@ export default {
   },
   async beforeMount() {
     // retrieve access token from localStorage
-    var access_token = localStorage.getItem("access_token");
+    let access_token = store.state.current_user.access_token;
 
     // redirect user to login if no access_token
-    if (!access_token) {
-      // redirect to login window in the backend
+    if (access_token == "") {
+      console.log("Redirecting to login")
       window.location = process.env.LOGIN_URL || "http://localhost:8888/login";
     }
 

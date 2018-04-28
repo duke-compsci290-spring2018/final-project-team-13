@@ -1,11 +1,14 @@
 <template>
-    <b-container fluid id="body">
+    <b-container fluid id="body" v-if="">
         <div id="graph">
         </div>
         <div id="overlay">
           <h1>Motif</h1>
           <h4>See what you're listening to</h4>
-          <b-button id="log_in" class="btn-success" v-if="sample_graph_loaded" @click="sign_in">Log In With Spotify <i class="fab fa-spotify"></i></b-button>
+          <b-button id="log_in" class="btn-success" v-if="sample_graph_loaded" @click="sign_in">
+            Log In With Spotify <i class="fab fa-spotify"></i>
+          </b-button>
+          <b-button class="btn-outline-success" v-if="" v-on:click="readCurrentUser">Read Current User State</b-button>
         </div>
     </b-container>
 </template>
@@ -13,6 +16,7 @@
 <script>
 import queryString from 'query-string';
 import vis from 'vis';
+import { router, db, users_ref, store } from '../main.js'
 
 export default {
   name: 'login',
@@ -25,6 +29,25 @@ export default {
   computed: {
 
   },
+  beforeMount() {
+    let access_token = localStorage.getItem("access_token")
+    let refresh_token = localStorage.getItem("refresh_token")
+
+    if ( access_token && refresh_token) {
+
+      // Get current user info from firebase by searching for access token and refresh token
+      users_ref.once("value").then(function(snapshot) {
+        snapshot.forEach(child => {
+          if (access_token == child.val().access_token && refresh_token == child.val().refresh_token) {
+            store.commit("updateCurrentUser", child.val())
+            console.log("> Updated current user from localStorage!")
+            router.push({ name: "home" })
+          }
+        })
+      })
+    }
+    else console.log("> Regular login flow")
+  },
   mounted() {
       this.sample_graph()
       this.clear_id()
@@ -32,10 +55,13 @@ export default {
   methods: {
     sign_in() {
           // redirect to login window in the backend
-          window.location = process.env.LOGIN_URL || "http://localhost:8888/login";
+          window.location = process.env.LOGIN_URL || "http://localhost:8888/login" + "?show_dialog=true";
     },
     clear_id() {
         if(localStorage.getItem("user_id") !== undefined) localStorage.removeItem("user_id");
+    },
+    readCurrentUser() {
+      console.log("> Current user: ", store.state.current_user)
     },
     sample_graph() {
 

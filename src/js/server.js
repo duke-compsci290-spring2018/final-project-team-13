@@ -9,18 +9,21 @@ let redirect_uri =
   'http://localhost:8888/callback'
 
 app.get('/login', function(req, res) {
+  let show_dialog = req.query.show_dialog || false
+  console.log("> Login request; show_dialog: " + show_dialog)
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
       client_id: process.env.SPOTIFY_CLIENT_ID,
       scope: 'user-read-private playlist-read-private user-top-read user-library-read user-follow-read',
-      redirect_uri
+      redirect_uri,
+      show_dialog: show_dialog
     }))
 })
 
 app.get('/refresh', function(req, res) {
   let refresh_token = req.query.refresh_token || null
-  console.log("Refreshing access token with refresh token: " + refresh_token);
+  console.log("> Refreshing access token with refresh token: " + refresh_token);
   let authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     form: {

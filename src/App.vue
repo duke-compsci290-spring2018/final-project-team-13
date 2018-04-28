@@ -1,85 +1,101 @@
 <template>
   <div id="app">
 
-      <b-navbar sticky toggleable="sm" type="dark" variant="dark">
-        <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-        <b-navbar-brand>Motif</b-navbar-brand>
+    <b-navbar sticky v-if="current_role !== 'guest'" toggleable="sm" type="dark" variant="dark">
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-navbar-brand id="logo" v-on:click="goHome">Motif</b-navbar-brand>
 
-        <b-collapse is-nav id="nav_collapse">
+      <b-collapse is-nav id="nav_collapse">
 
-          <b-navbar-nav>
-            <b-button v-if="" v-on:click="readData">Read User Data</b-button>
-          </b-navbar-nav>
+        <b-navbar-nav>
+          <b-button class="btn-outline-success" v-if="" v-on:click="readCurrentUser">Read Current User State</b-button>
+          <b-button v-on:click="refreshToken" class="btn-info">Request New Access Token</b-button>
+        </b-navbar-nav>
 
-          <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto">
-            <b-button v-if="current_user_role == 'guest'" v-on:click="">Register as User</b-button>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown right v-if="current_role == 'user' || current_role == 'admin'">
+            <!-- Using button-content slot -->
+            <template slot="button-content">
+              {{ current_role }}
+            </template>
+            <b-dropdown-item v-if="current_role == 'admin'" v-on:click="goAdmin">Admin Page</b-dropdown-item>
+            <b-dropdown-item v-on:click="logout">Logout</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
 
-            <b-nav-item-dropdown right v-if="current_user_role == 'user' || current_user_role == 'admin'">
-              <!-- Using button-content slot -->
-              <template slot="button-content">
-                <em>User</em>
-              </template>
-              <b-dropdown-item href="#">Profile</b-dropdown-item>
-              <b-dropdown-item href="#">Signout</b-dropdown-item>
-            </b-nav-item-dropdown>
-          </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
 
-        </b-collapse>
-      </b-navbar>
-
-      <transition name="fade">
-        <router-view>
-        </router-view>
-      </transition>
+    <router-view>
+    </router-view>
 
   </div>
 </template>
 
 <script>
 import queryString from 'query-string'
-import { router, db, users_ref } from './main.js'
+import * as Router from 'vue-router'
+import { router, db, users_ref, store } from './main.js'
 
 export default {
   name: 'app',
   data () {
     return {
-      current_user_id: "",
-      current_user_role: "anonymous",
-      is_logged_in: false
     }
   },
   computed: {
-      on_login_page() {
-
+      current_role() {
+        return store.state.current_user.role
       }
   },
   watch: {
-  },
-  methods: {
-    test() {
-        console.log(this.user_id)
-    },
-    readData() {
-      let my_id = "1239569139"
-      db.ref("/users/" + my_id).once("value").then(function(snapshot) {
-        console.log(snapshot.val())
-      })
-
-      // users_ref.once("value").then(function(snapshot) {
-      //   snapshot.forEach(user => {
-      //       let spotify_id = user.child('spotifyID').val();
-      //       if(spotify_id === my_id) {
-      //           let role = user.child('role').val();
-      //           if(role === 'admin') this.current_user.role = 'admin';
-      //           else this.current_user.role = 'user';
-      //       }
-      //   })
-      // });
+    current_role(role) {
+      store.commit("updateCurrentRole", role)
     }
   },
-  updated() {
+  methods: {
+    goHome() {
+      router.push({ name: "home" })
+    },
+    goAdmin() {
+      router.push({ name: "admin" })
+    },
+    readCurrentUser() {
+      console.log("> Current user: ", store.state.current_user)
+    },
+    readCurrentRole() {
+      console.log("> " + this.current_role)
+    },
+    logout() {
+      // Reset current user state
+      store.commit("updateCurrentUser", {
+        spotify_id: "",
+        display_name: "Guest",
+        profile_picture : "",
+        role: "guest",
+        country: "",
+        product: "",
+        followers: "",
+        access_token: "",
+        refresh_token: ""
+      })
+      // Delete access_token and refresh_token from localStorage
+      localStorage.removeItem("access_token")
+      localStorage.removeItem("refresh_token")
 
+      // Take user back to login page
+      router.push({ name: 'login'})
+    },
+    refreshToken() {
+      // TODO: configure REFRESH_URL within Heroku
+      window.location = process.env.REFRESH_URL || "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token;
+    }
+  },
+  created() {
+    db.ref("/users/" + store.state.current_user.spotify_id).on("child_changed", function(snapshot) {
+      store.state.current_user.role = snapshot.val().role
+    });
   }
 }
 </script>
@@ -101,6 +117,10 @@ a {
 
 a:hover {
   color: White;
+}
+
+#logo:hover {
+  cursor: pointer;
 }
 
 .tracks {
