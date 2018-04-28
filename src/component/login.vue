@@ -1,6 +1,7 @@
 <template>
   <b-container>
     <button type="button" class="btn btn-outline-success" @click="sign_in">Log In With Spotify</button>
+    Demo
   </b-container>
 </template>
 

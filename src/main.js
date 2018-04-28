@@ -3,7 +3,9 @@ import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
 import VueRouter from 'vue-router'
 import Chart from 'chart.js'
-import $ from 'jquery';
+import $ from 'jquery'
+import VueFire from 'vuefire'
+import Firebase from 'firebase'
 
 import Login from './component/login.vue'
 import Home from './component/home.vue'
@@ -18,8 +20,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 // turn off the console note about switching to production mode
 Vue.config.productionTip = false
 
-Vue.use(BootstrapVue);
+Vue.use(BootstrapVue)
 Vue.use(VueRouter)
+Vue.use(VueFire)
 
 const routes = [
   {
@@ -56,7 +59,7 @@ const routes = [
 
 const router = new VueRouter({
   routes: routes,
-  mode: 'hash' // GitHub Pages (and locally opening the index.html) requires "hash" mode in order to work
+  mode: 'history' // GitHub Pages (and locally opening the index.html) requires "hash" mode in order to work
 })
 
 
