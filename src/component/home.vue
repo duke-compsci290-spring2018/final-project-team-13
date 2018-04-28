@@ -109,6 +109,9 @@ export default {
     }).then(data => {
         console.log("Profile", data);
         this.profile = data;
+        if (typeof(Storage) !== "undefined") {
+          localStorage.setItem("user_id", data.id);
+        }
     });
 
   }

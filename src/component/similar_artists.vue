@@ -212,7 +212,6 @@ export default {
             this.options = {
                 nodes: {
                     mass: 1,
-                    title: "!!!!!!!!",
                     //  '<b>Fastback Networks</b> <br><br>' + 'Country: ' + 'USA' + '<br>' + 'City: ' + 'San Jose',
                     shadow: {
                         enabled: true,

@@ -10,7 +10,7 @@
         <b-collapse is-nav id="nav_collapse">
 
           <b-navbar-nav>
-            <b-button v-on:click="readData">Read Data</b-button>
+            <b-button v-if="user_id" v-on:click="readData">Read Data</b-button>
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
@@ -68,13 +68,29 @@ export default {
     }
   },
   computed: {
+      user_id() {
+          console.log(localStorage.getItem("user_id"));
+          return localStorage.getItem("user_id");
+      }
   },
   watch: {
   },
   methods: {
+    test() {
+        console.log(this.user_id)
+    },
     readData() {
+      let my_id = localStorage.getItem("user_id");
+      console.log(my_id);
       users_ref.once("value").then(function(snapshot) {
-        console.log(snapshot.val())
+        snapshot.forEach(user => {
+            let spotify_id = user.child('spotifyID').val();
+            if(spotify_id === my_id) {
+                let role = user.child('role').val();
+                if(role === 'admin') this.current_user.role = 'admin';
+                else this.current_user.role = 'user';
+            }
+        })
       });
     }
   },
