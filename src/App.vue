@@ -1,39 +1,9 @@
 <template>
   <div id="app">
       <h1> Motif </h1>
-      <!-- sign in button -->
-      <button type="button" class="btn btn-outline-secondary" @click="sign_in">Sign In Baby</button>
-      <button type="button" class="btn btn-outline-secondary" @click="access_api">Pull that Data Baby</button>
 
-      <!-- <similarartists v-if="artists_ready" :user_selected="time_selected" :data_short="top_artists_short" :data_medium="top_artists_medium" :data_long="top_artists_long"></similarartists> -->
-
-      <div id="options">
-          <b-form-select v-model="time_selected" :options="time_options" placeholder="cool" class="mb-3">
-              <option slot="first" :value="null" disabled>-- Time Period --</option>
-          </b-form-select>
-      </div>
-
-      <!-- <div v-if="artists_ready && time_selected">
-        <h3>Top 10 Artists</h3>
-        <ul>
-          <li class="artists" v-for="artist in top_artists_display.items">
-            <p> {{ artist.name }} </p> <br>
-            <img class="artist_image" :src="artist.images[1].url" />
-          </li>
-        </ul>
-      </div> -->
-
-      <avgfeat v-if="feat_ready" :user_selected="time_selected" :audioFeatures_short="top_tracks_short_features" :audioFeatures_medium="top_tracks_medium_features" :audioFeatures_long="top_tracks_long_features"></avgfeat>
-
-      <div v-if="time_selected">
-        <h3>Top 10 Tracks</h3>
-        <ul>
-          <li class="tracks" v-for="track in top_tracks_display.items">
-            <p> {{ track.name }} </p> <br>
-            <img class="track_image" :src="track.album.images[1].url" />
-          </li>
-        </ul>
-      </div>
+      <router-view>
+      </router-view>
 
   </div>
 </template>
@@ -66,29 +36,8 @@ export default {
     }
   },
   computed: {
-      // if all the features are loaded
-      feat_ready: function() {
-          return this.top_tracks_short_features && this.top_tracks_medium_features && this.top_tracks_long_features;
-      },
-      artists_ready: function() {
-          return this.top_artists_short && this.top_tracks_medium && this.top_tracks_long;
-      }
   },
   watch: {
-      time_selected: function(val) {
-          if (val === 'short') {
-              this.top_tracks_display = this.top_tracks_short;
-              this.top_artists_display = this.top_artists_short;
-          }
-          else if (val === 'medium') {
-              this.top_tracks_display = this.top_tracks_medium;
-              this.top_artists_display = this.top_artists_medium;
-          }
-          else {
-              this.top_tracks_display = this.top_tracks_long;
-              this.top_artists_display = this.top_artists_long;
-          }
-      },
   },
   methods: {
       sign_in() {
@@ -260,6 +209,14 @@ export default {
 #options {
     margin-top: 30px;
     width: 30%;
+}
+
+a {
+  color: Black;
+}
+
+a:hover {
+  color: White;
 }
 
 .tracks {
