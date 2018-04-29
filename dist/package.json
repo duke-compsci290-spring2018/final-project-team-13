@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-   "postinstall": "npm install express"
+   "postinstall": "npm install express",
+   "start": "node ./server.js"
  }
 }
