@@ -93,8 +93,8 @@ export default {
       router.push({ name: 'login'})
     },
     refreshToken() {
-      // TODO: configure REFRESH_URL within Heroku
-      window.location = process.env.REFRESH_URL || "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token;
+      if (process.env.REFRESH_URL) window.location = process.env.REFRESH_URL + store.state.current_user.refresh_token
+      else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
     },
     updateBG() {
       let bg = store.state.current_user.background
