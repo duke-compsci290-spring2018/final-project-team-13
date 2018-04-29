@@ -15,6 +15,8 @@ import AverageAudioFeatures from './component/average_audio_features.vue'
 import Timeline from './component/timeline.vue'
 import TopTracksArtists from './component/top_tracks_artists.vue'
 import Admin from './component/admin.vue'
+import Profile from './component/profile.vue'
+import About from './component/about.vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -76,6 +78,16 @@ const routes = [
     path: "/admin",
     name: "admin",
     component: Admin
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: Profile
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: About
   }
 
 ]
@@ -100,7 +112,8 @@ const store = new Vuex.Store({
       product: "",
       followers: "",
       access_token: "",
-      refresh_token: ""
+      refresh_token: "",
+      background: ""
     }
   },
   mutations: {
@@ -109,6 +122,9 @@ const store = new Vuex.Store({
     },
     updateCurrentRole (state, role) {
       state.current_user.role = role
+    },
+    updateBackground (state, bg) {
+      state.current_user.bg = bg
     }
   }
 })

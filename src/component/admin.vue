@@ -1,7 +1,7 @@
 <template>
     <b-container fluid>
       <br/>
-      <b-table striped hover responsive id="table" :items="items" :fields="fields">
+      <b-table hover responsive id="table" :items="items" :fields="fields">
         <template slot="delete" slot-scope="row">
           <b-button variant="outline-danger" size="sm" @click.stop="remove_user(row)" class="mr-2">
             <i class="fas fa-times"></i>
@@ -75,7 +75,8 @@ export default {
             type: type,
           }
 
-          table.push(item);
+          // Exclude current admin from showing up in the table
+          if (id !== store.state.current_user.spotify_id) table.push(item);
         })
         return table;
       }
