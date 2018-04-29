@@ -35,64 +35,48 @@
 
 <script>
 import queryString from 'query-string'
-import * as Router from 'vue-router'
-import { router, db, users_ref, store } from './main.js'
+import { router, db, users_ref } from './main.js'
 
 export default {
   name: 'app',
   data () {
     return {
+      current_user_id: "",
+      current_user_role: "anonymous",
+      is_logged_in: false
     }
   },
   computed: {
-      current_role() {
-        return store.state.current_user.role
-      },
-      profile_picture() {
-        return store.state.current_user.profile_picture
+      on_login_page() {
+
       }
   },
   watch: {
-    current_role(role) {
-      store.commit("updateCurrentRole", role)
-    }
   },
   methods: {
-    goHome() {
-      router.push({ name: "home" })
+    test() {
+        console.log(this.user_id)
     },
-    goAdmin() {
-      router.push({ name: "admin" })
-    },
-    logout() {
-      // Reset current user state
-      store.commit("updateCurrentUser", {
-        spotify_id: "",
-        display_name: "Guest",
-        profile_picture : "",
-        role: "guest",
-        country: "",
-        product: "",
-        followers: "",
-        access_token: "",
-        refresh_token: ""
+    readData() {
+      let my_id = "1239569139"
+      db.ref("/users/" + my_id).once("value").then(function(snapshot) {
+        console.log(snapshot.val())
       })
-      // Delete access_token and refresh_token from localStorage
-      localStorage.removeItem("access_token")
-      localStorage.removeItem("refresh_token")
 
-      // Take user back to login page
-      router.push({ name: 'login'})
-    },
-    refreshToken() {
-      // TODO: configure REFRESH_URL within Heroku
-      window.location = process.env.REFRESH_URL || "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token;
+      // users_ref.once("value").then(function(snapshot) {
+      //   snapshot.forEach(user => {
+      //       let spotify_id = user.child('spotifyID').val();
+      //       if(spotify_id === my_id) {
+      //           let role = user.child('role').val();
+      //           if(role === 'admin') this.current_user.role = 'admin';
+      //           else this.current_user.role = 'user';
+      //       }
+      //   })
+      // });
     }
   },
-  created() {
-    db.ref("/users/" + store.state.current_user.spotify_id).on("child_changed", function(snapshot) {
-      store.state.current_user.role = snapshot.val().role
-    });
+  updated() {
+
   }
 }
 </script>
@@ -124,11 +108,10 @@ a:hover {
   opacity: 1;
 }
 
-#profile_picture {
-  max-width: 40px;
-  max-height: 40px;
-  border: 2px solid White;
-  border-radius: 15%;
+.artist_image {
+    margin-top: -25px;
+    margin-bottom: 25px;
+    width: 180px;
 }
 
 .fade-enter-active, .fade-leave-active {
