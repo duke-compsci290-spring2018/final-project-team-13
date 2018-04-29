@@ -46,6 +46,8 @@ import queryString from 'query-string';
 import { router, db, users_ref, store } from '../main.js'
 import $ from 'jquery'
 
+const REFRESH_URL = process.env.REFRESH_URL
+
 export default {
   name: 'home',
   data () {
@@ -126,7 +128,7 @@ export default {
 
         // Catch 401 Unauthorized error
         if (data == 401) {
-          if (process.env.REFRESH_URL) window.location = process.env.REFRESH_URL + store.state.current_user.refresh_token
+          if (REFRESH_URL) window.location = REFRESH_URL + store.state.current_user.refresh_token
           else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
           return
         }

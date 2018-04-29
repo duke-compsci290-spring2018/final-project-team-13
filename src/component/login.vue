@@ -19,6 +19,8 @@
 import vis from 'vis';
 import { router, db, users_ref, store } from '../main.js'
 
+const LOGIN_URL = process.env.LOGIN_URL
+
 export default {
   name: 'login',
   data () {
@@ -60,7 +62,7 @@ export default {
   methods: {
     sign_in() {
           // redirect to login window in the backend
-          window.location = process.env.LOGIN_URL || "http://localhost:8888/login" + "?show_dialog=true";
+          window.location = LOGIN_URL || "http://localhost:8888/login" + "?show_dialog=true";
     },
     clear_id() {
         if(localStorage.getItem("user_id") !== undefined) localStorage.removeItem("user_id");
