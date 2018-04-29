@@ -1,6 +1,6 @@
 <template>
   <div>
-    Timeline - Under Development
+    Timeline - Currently Under Development
   </div>
 
 

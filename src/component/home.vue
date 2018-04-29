@@ -83,7 +83,7 @@ export default {
       refresh_token = store.state.current_user.refresh_token
 
       if (access_token && refresh_token && access_token !== "undefined" && refresh_token !== "undefined") {
-        console.log("> Using current user access token & refresh token")
+        // console.log("> Using current user access token & refresh token")
       }
       // if no access token in state, check for access and refresh token in localStorage
       else {
@@ -97,7 +97,7 @@ export default {
             snapshot.forEach(child => {
               if (access_token == child.val().access_token && refresh_token == child.val().refresh_token) {
                 store.commit("updateCurrentUser", child.val())
-                console.log("> Updated current user from localStorage!")
+                // console.log("> Updated current user from localStorage!")
               }
             })
           })
@@ -165,7 +165,7 @@ export default {
 
           }
           else {
-            console.log("> User " + snapshot.val().display_name + " (" + data.id + ") exists; updated profile info");
+            // console.log("> User " + snapshot.val().display_name + " (" + data.id + ") exists; updated profile info");
             // Existing user
 
             db.ref("/users/" + data.id).update({

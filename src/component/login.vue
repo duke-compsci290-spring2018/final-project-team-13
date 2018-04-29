@@ -41,14 +41,14 @@ export default {
         snapshot.forEach(child => {
           if (access_token == child.val().access_token && refresh_token == child.val().refresh_token) {
             store.commit("updateCurrentUser", child.val())
-            console.log("> Updated current user from localStorage!")
+            // console.log("> Updated current user from localStorage!")
             router.push({ name: "home" })
           }
         })
       })
     }
     else {
-      console.log("> Regular login flow")
+      // console.log("> Regular login flow")
       this.login_ready = true
     }
   },

@@ -150,7 +150,7 @@ export default {
 
       // check for access token in state
       if (access_token && refresh_token) {
-        console.log("> Using current user access token & refresh token")
+        // console.log("> Using current user access token & refresh token")
         access_token = store.state.current_user.access_token
         refresh_token = store.state.current_user.refresh_token
       }
@@ -165,7 +165,7 @@ export default {
             snapshot.forEach(child => {
               if (access_token == child.val().access_token && refresh_token == child.val().refresh_token) {
                 store.commit("updateCurrentUser", child.val())
-                console.log("> Updated current user from localStorage!")
+                // console.log("> Updated current user from localStorage!")
               }
             })
           })
