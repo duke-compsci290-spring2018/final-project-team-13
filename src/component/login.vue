@@ -101,7 +101,7 @@ export default {
                 width: 3,
                 selectionWidth: 3,
                 shadow:{
-                  enabled: true,
+                  enabled: false,
                   size:10,
                 },
                 smooth: {
