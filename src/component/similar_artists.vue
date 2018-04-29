@@ -1,27 +1,30 @@
 <template>
     <div id="body">
+      <h3>Your Top Artists and Similar Artists</h3>
          <b-row id="options_wrapper">
+             <!-- time selector -->
              <div id="options">
                  <b-form-select v-model="time_selected" :options="time_options" placeholder="cool" class="mb-3">
                      <option slot="first" :value="null" disabled>-- Time Period --</option>
                  </b-form-select>
              </div>
+             <!-- load and reload -->
              <div id="load">
                  <button type="button" v-if="load_graph_condition" class="btn btn-secondary" @click="init"> Load Graph </button>
                  <button type="button" v-if="reload_graph_condition" class="btn btn-secondary" @click="init"> Reload Graph </button>
              </div>
          </b-row>
-
+         <!-- modify the graph -->
          <div id="actions">
              <button type="button" v-if="add_lvl0_edge_condition" class="btn btn-outline-secondary" @click="add_lvl0_edge"> Connect your top artists </button>
              <button type="button" v-if="add_lvl1_condition" class="btn btn-outline-secondary" @click="add_lvl1"> Add similar artists </button>
              <button type="button" v-if="related_artists_condition" class="btn btn-outline-secondary" @click="display_only_related"> Display only similar artists </button>
              <button type="button" v-if="all_artists_condition" class="btn btn-outline-secondary" @click="display_all"> Display all artists </button>
          </div>
-
+         <!-- graph -->
          <div id="graph">
          </div>
-
+         <!-- note -->
          <p id="note"><b>Note:</b> You can zoom in/out by scrolling and drag the graph around</p>
     </div>
 </template>
@@ -41,9 +44,11 @@ export default {
         }
     },
     computed: {
+        // get access token for Spotify api
         access_token() {
             return localStorage.getItem("access_token");
         },
+        // logics for the action buttons
         data_ready() {
             return this.artists_short && this.artists_medium && this.artists_long
         },
@@ -81,6 +86,7 @@ export default {
             return this.only_related;
 
         },
+        // data set of the graph
         data() {
             let res = {
                 nodes: this.all_nodes,
@@ -91,16 +97,22 @@ export default {
     },
     data() {
         return {
+            // top artist data
             artists_short: this.data_short,
             artists_medium: this.data_medium,
             artists_long: this.data_long,
+            // tree structure
             artist_tree: null,
+            // nodes and edges for the graph
             lvl0_nodes: null,
             lvl0_edges: null,
             lvl1_nodes: null,
             lvl1_edges: null,
+            // options for the graph
             options: null,
+            // the location in the html where the graph will be drawn
             container: null,
+            // nodes and edges datasets
             all_nodes: null,
             all_edges: null,
             // conditions
@@ -118,9 +130,13 @@ export default {
         }
     },
     methods: {
+        // prepare the data tree and initialize the graph
         init(){
+            // logics
             this.edge_added = false;
             this.lvl1_added = false;
+            this.only_related = false;
+
             this.initialize_tree().then(tree => {
                 let overlap_data = this.find_overlap(tree);
                 let processed_data = this.process_overlap_data(overlap_data);
@@ -129,6 +145,7 @@ export default {
                 this.graph_loaded = true;
             })
         },
+        // create the tree structure to store all artists and their dependency
         initialize_tree() {
             // initialize the root of the tree
             let a_tree = new Node("root");
@@ -137,7 +154,7 @@ export default {
 
             return new Promise(resolve => {
                 this.selected_data.items.forEach(artist => {
-                    let artist_node = new Node(artist.id, artist.name, artist.images[1].url);
+                    let artist_node = new Node(artist.id, artist.name, "");
                     // add first level nodes to the root
                     a_tree.addChild(artist_node);
                     // for each first level node, fetch their similar artists
@@ -157,12 +174,8 @@ export default {
                 })
             })
         },
-        // find node in a tree, @param(Node, String)
-        // return Node if found, else return false
+        // prepare the nodes and edges into the correct format to load in the graph
         initialize_graph_data(data) {
-            var nodes = [];
-            var id_counter = 1;
-
             let n0 = [];
             let n1 = [];
             let e0 = [];
@@ -196,11 +209,12 @@ export default {
             this.lvl1_edges = e1;
 
         },
+        // set the configs and options for the graph and draw the graph
         draw_graph() {
 
             this.all_nodes = new vis.DataSet();
             this.all_edges = new vis.DataSet();
-
+            // only add lvl0 nodes upon loading the graph
             this.all_nodes.add(this.lvl0_nodes);
 
             this.container = document.getElementById('graph');
@@ -217,10 +231,6 @@ export default {
                 },
                 edges: {
                     selectionWidth: 3,
-                    shadow:{
-                      enabled: false,
-                      size:10,
-                    },
                     smooth: {
                       enabled: true,
                       type: "dynamic",
@@ -266,16 +276,12 @@ export default {
                         font: {
                             color: '#191414',
                             size: 18,
-                            // background: 'rgba(1,1,1,0.1)'
-                            // strokeWidth: 2,
-                            // strokeColor: '',
                         }
                     },
                     level1_node: {
                         size: 25,
                         borderWidth: 0,
                         color: {
-                            // border: '',
                         },
                         font: {
                             color: '#473939',
@@ -285,28 +291,31 @@ export default {
             };
 
             var network = new vis.Network(this.container, this.data, this.options);
-
-            // this.network = network;
         },
+        // draw the graph where only related artists are shown
         display_only_related() {
             this.only_related = true;
             this.options.groups.level0_node.hidden = true;
             var network = new vis.Network(this.container, this.data, this.options);
         },
+        // draw the graph where all artists are shown
         display_all() {
             this.only_related = false;
             this.options.groups.level0_node.hidden = false;
             var network = new vis.Network(this.container, this.data, this.options);
         },
+        // add edges that connects lvl0 nodes into the graph
         add_lvl0_edge() {
             this.all_edges.add(this.lvl0_edges);
             this.edge_added = true;
         },
+        // add lvl1 nodes and edges
         add_lvl1() {
             this.all_nodes.add(this.lvl1_nodes);
             this.all_edges.add(this.lvl1_edges);
             this.lvl1_added = true;
         },
+        // given a tree and an id, find the all nodes with that id
         find_node(root, id) {
             var queue = [root];
             let res = [];
@@ -320,6 +329,7 @@ export default {
             if(res.length === 0) return false;
             else return res;
         },
+        // given a tree, find all nodes with same id and group them together
         find_overlap(root) {
             let res = [];
             let queue = [root];
@@ -344,6 +354,7 @@ export default {
             if(res.length === 0) return false;
             else return res;
         },
+        // given an array of grouped nodes, process them into nodes and edges for the graph
         process_overlap_data(array) {
             let data = array;
 
@@ -379,6 +390,7 @@ export default {
 
             return [lvl1_nodes, lvl0_edges, lvl1_edges];
         },
+        // generate edges based on node groups
         generate_edges(array) {
             let lvl1_nodes = [];
             let lvl0_edges = [];
@@ -393,7 +405,7 @@ export default {
                             let key = parent.id;
                             let obj = {};
                             obj[key] = 1;
-                            lvl0_edges.push({from: array[0].id, to: parent.id, width: 3, color: 'black'});
+                            lvl0_edges.push({from: array[0].id, to: parent.id, width: 5, color: 'black'});
                         }
                     }
                 }
@@ -405,13 +417,14 @@ export default {
                         let parent = node.getParentNode();
                         if(parent.level === 1) {
                             lvl1_nodes.push(node);
-                            lvl1_edges.push({from: parent.id, to: node.id, width: 1, color: 'black'});
+                            lvl1_edges.push({from: parent.id, to: node.id, width: 2, color: 'black'});
                         }
                     }
                 }
             }
             return [lvl1_nodes, lvl0_edges, lvl1_edges];
         },
+        // given an artist id, fetch all similar artists data from Spotify endpoint
         fetch_similar_data(id) {
             return new Promise((resolve, reject) => {
                 fetch('https://api.spotify.com/v1/artists/'+ id +'/related-artists' , {
@@ -432,7 +445,9 @@ export default {
                 });
             })
         },
-        fetch_artist_data() {            // top artists in short term
+        // fetch user's top artists from Spotify endpoint
+        fetch_artist_data() {
+          // top artists in short term
             fetch('https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=10&offset=0' , {
                 method: 'GET',
                 headers: {
@@ -476,7 +491,7 @@ export default {
 #graph {
     margin-top: 0px;
     width: 100vw;
-    height: 73vh;
+    height: 77vh;
     margin-left: 0px;
 
 }

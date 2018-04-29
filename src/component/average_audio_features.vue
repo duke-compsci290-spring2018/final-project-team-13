@@ -1,34 +1,33 @@
 <template>
     <div id="body">
 
-      <b-container fluid id="options">
-        <b-row>
+      <h3>Average Audio Features of your top 20 tracks</h3>
+      <b-row id="options_wrapper">
+        <div id="options">
            <b-form-select v-model="time_selected" :options="time_options" class="mb-3">
                <option slot="first" :value="null" disabled>Time Period</option>
            </b-form-select>
-        </b-row>
-        <b-row>
-         <b-col>
-           <b-button v-on:click="draw_graph">
-             Load graph
-           </b-button>
-         </b-col>
-          <b-col>
-             <ul v-if="avg_features != null">
-                 <li v-for="feat in avg_features[dataset_index]">
-                     {{ feat.type }}: {{ feat.point }}
-                 </li>
-             </ul>
-          </b-col>
-         </b-row>
-      </b-container>
+         </div>
+         <div id="load">
+           <b-button v-on:click="draw_graph">Load graph</b-button>
+         </div>
+      </b-row>
 
-      <h3>Average Audio Features of your top 20 tracks</h3>
+<b-row id="graph_list_wrapper">
+  <b-col>
       <!-- canvas for chartjs -->
       <div class="chart-container">
           <canvas id="myChart"></canvas>
       </div>
-
+</b-col>
+<b-col id="list">
+        <ul v-if="avg_features != null">
+          <li v-for="feat in avg_features[dataset_index]">
+            {{ feat.type }}: {{ feat.point }}
+          </li>
+        </ul>
+    </b-col>
+</b-row>
     </div>
 </template>
 
@@ -374,18 +373,46 @@ export default {
 </script>
 
 <style>
-.body {
-    position: relative;
+#body {
+    padding-top:10px;
 }
 
 .chart-container {
     position: relative;
     margin: auto;
-    height: 60vh;
-    width: 45vw;
+    height: 30vh;
+    width: 70vw;
 }
 
-#wrapper ul{
-    list-style-type: none;
+#options_wrapper {
+    margin: 0 auto;
+    width: 80%;
 }
+
+#options_wrapper #options {
+    width: 60%;
+    margin: 0 auto;
+    display: table;
+}
+
+#options_wrapper #load {
+    margin: 0 auto;
+    float: left;
+}
+
+#graph_list_wrapper {
+  margin-top: 20px;
+  vertical-align: middle;
+}
+
+#list {
+  text-align: left;
+  padding-top: 50px;
+  padding-left: 0px;
+}
+
+#list ul{
+  list-style: none;
+}
+
 </style>
