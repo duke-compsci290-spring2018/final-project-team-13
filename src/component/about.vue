@@ -24,34 +24,7 @@ export default {
 
   },
   beforeMount() {
-    let access_token = store.state.current_user.access_token
-    let refresh_token = store.state.current_user.refresh_token
 
-    if (access_token && refresh_token && access_token !== "undefined" && refresh_token !== "undefined") {
-      console.log("> Using current user access token & refresh token")
-    }
-    // if no access token in state, check for access and refresh token in localStorage
-    else {
-      access_token = localStorage.getItem("access_token")
-      refresh_token = localStorage.getItem("refresh_token")
-
-      if (access_token && refresh_token) {
-
-        // Get current user info from firebase by searching for access token and refresh token
-        users_ref.once("value").then(function(snapshot) {
-          snapshot.forEach(child => {
-            if (access_token == child.val().access_token && refresh_token == child.val().refresh_token) {
-              store.commit("updateCurrentUser", child.val())
-              console.log("> Updated current user from localStorage!")
-            }
-          })
-        })
-      }
-      else {
-        // Last resort, return user to login page
-        router.push({ name: "login" })
-      }
-    }
   }
 }
 </script>

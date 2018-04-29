@@ -127,12 +127,13 @@ export default {
         // Catch 401 Unauthorized error
         if (data == 401) {
           if (process.env.REFRESH_URL) window.location = process.env.REFRESH_URL + store.state.current_user.refresh_token
-          else window.location = "https://motif-backend-server.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
+          // else window.location = "https://motif-backend-server.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
+          else window.location = "https://testserver290.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
           // else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
           return
         }
         this.profile = data;
-        console.log(data)
+
         // Store access_token and refresh_token token
         if (typeof(Storage) !== "undefined") {
           localStorage.setItem("access_token", access_token)

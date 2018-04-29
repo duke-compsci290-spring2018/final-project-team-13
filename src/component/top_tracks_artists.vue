@@ -167,14 +167,22 @@ export default {
           // Most likely 1 hour timeout on access token
           return 401
         }
+        else if (response.status == 403) {
+          // ?
+          return 403
+        }
         else return response.json();
       }).then(data => {
         // Catch 401 Unauthorized error
         if (data == 401) {
           if (process.env.REFRESH_URL) window.location = process.env.REFRESH_URL + store.state.current_user.refresh_token
-          else window.location = "https://motif-backend-server.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
+          // else window.location = "https://motif-backend-server.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
+          else window.location = "https://testserver290.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
           // else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
           return
+        }
+        else if (data == 403) {
+          router.push({ name: "top_tracks_artists"})
         }
 
         this.top_artists_short = data;
