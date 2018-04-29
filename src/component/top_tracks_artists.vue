@@ -97,8 +97,7 @@ export default {
     let access_token = store.state.current_user.access_token;
 
     // redirect user to login if no access_token
-    if (access_token == "") {
-      console.log("Redirecting to login")
+    if (!access_token || access_token == "undefined") {
       window.location = process.env.LOGIN_URL || "http://localhost:8888/login";
     }
 
@@ -108,11 +107,21 @@ export default {
         headers: {
             'Authorization': 'Bearer ' + access_token
         },
-    }).then(raw_data => {
-        return raw_data.json();
+    }).then(response => {
+      if (response.status == 401) {
+        // Most likely 1 hour timeout on access token
+        return 401
+      }
+      else return response.json();
     }).then(data => {
-        console.log("Top Artists Short", data);
-        this.top_artists_short = data;
+      // Catch 401 Unauthorized error
+      if (data == 401) {
+        // TODO: configure REFRESH_URL within Heroku
+        window.location = process.env.REFRESH_URL || "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token;
+        return
+      }
+
+      this.top_artists_short = data;
     });
 
     // top artists in medium term
@@ -124,7 +133,6 @@ export default {
     }).then(raw_data => {
         return raw_data.json();
     }).then(data => {
-        console.log("Top Artists Medium", data);
         this.top_artists_medium = data;
     });
 
@@ -137,7 +145,6 @@ export default {
     }).then(raw_data => {
         return raw_data.json();
     }).then(data => {
-        console.log("Top Artists Long", data);
         this.top_artists_long = data;
     });
 
@@ -150,7 +157,6 @@ export default {
     }).then(raw_data => {
         return raw_data.json();
     }).then(data => {
-        console.log("Top Tracks Short", data);
         this.top_tracks_short = data;
     });
 
@@ -163,7 +169,6 @@ export default {
     }).then(raw_data => {
         return raw_data.json();
     }).then(data => {
-        console.log("Top Tracks Medium", data);
         this.top_tracks_medium = data;
     });
 
@@ -176,7 +181,6 @@ export default {
     }).then(raw_data => {
         return raw_data.json();
     }).then(data => {
-        console.log("Top Tracks Long", data);
         this.top_tracks_long = data;
     });
   }

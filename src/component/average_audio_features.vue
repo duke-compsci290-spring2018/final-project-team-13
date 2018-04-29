@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { router, db, users_ref, store } from '../main.js'
 
 export default {
   name: "average_audio_features",
@@ -53,13 +54,47 @@ export default {
         dataset_index: 0
       }
   },
-  async mounted() {
+  async beforeMount() {
+    // let access_token = store.state.current_user.access_token
+    // if (!access_token || access_token == "undefined") {
+    //   router.push({ name: "home" })
+    // }
+
+    let access_token = store.state.current_user.access_token
+    let refresh_token = store.state.current_user.refresh_token
+
+    // check for access token in state
+    if (access_token && refresh_token) {
+      console.log("> Using current user access token & refresh token")
+      access_token = store.state.current_user.access_token
+      refresh_token = store.state.current_user.refresh_token
       this.get_features()
-      // redirect user to login if no access_token
-      if (!localStorage.getItem("access_token")) {
-        // redirect to login window in the backend
-        window.location = process.env.LOGIN_URL || "http://localhost:8888/login";
+    }
+    // if no access token in state, check for access and refresh token in localStorage
+    else {
+      access_token = localStorage.getItem("access_token")
+      refresh_token = localStorage.getItem("refresh_token")
+
+      if ( access_token && refresh_token) {
+
+        // Get current user info from firebase by searching for access token and refresh token
+        users_ref.once("value").then(function(snapshot) {
+          snapshot.forEach(child => {
+            if (access_token == child.val().access_token && refresh_token == child.val().refresh_token) {
+              store.commit("updateCurrentUser", child.val())
+              console.log("> Updated current user from localStorage!")
+            }
+          })
+        }).then(() => {
+          this.get_features()
+        })
       }
+      else {
+        // Last resort, return user to login page
+        // window.location = "http://localhost:8080/" //process.env.LOGIN_URL ||
+        router.push({ name: "login" })
+      }
+    }
   },
   watch: {
       time_selected: function(val) {
@@ -77,7 +112,7 @@ export default {
   methods: {
     get_features() {
       // retrieve access token from localStorage
-      var access_token = localStorage.getItem("access_token");
+      var access_token = store.state.current_user.access_token
 
       // top tracks in short term
       fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=20&offset=0' , {
@@ -85,9 +120,20 @@ export default {
           headers: {
               'Authorization': 'Bearer ' + access_token
           },
-      }).then(raw_data => {
-          return raw_data.json();
+      }).then(response => {
+        if (response.status == 401) {
+          // Most likely 1 hour timeout on access token
+          return 401
+        }
+        else return response.json();
       }).then(data => {
+          // Catch 401 Unauthorized error
+          if (data == 401) {
+            // TODO: configure REFRESH_URL within Heroku
+            window.location = process.env.REFRESH_URL || "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token;
+            return
+          }
+
           let track_ids = "";
           data.items.forEach(track => {
               track_ids += track.id + "%2C";
@@ -105,7 +151,6 @@ export default {
               return raw_data.json();
           }).then(data => {
               this.features_short = data;
-              console.log("Features (Short)", this.features_short);
           });
       });
 
@@ -135,7 +180,6 @@ export default {
             return raw_data.json();
         }).then(data => {
             this.features_medium = data;
-            console.log("Features (Medium)", this.features_medium);
         });
       });
 
@@ -165,7 +209,6 @@ export default {
             return raw_data.json();
         }).then(data => {
             this.features_long = data;
-            console.log("Features (Long)", this.features_long);
         });
       });
 

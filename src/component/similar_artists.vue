@@ -30,6 +30,7 @@
 import queryString from 'query-string';
 import vis from 'vis';
 var Node = require('../js/tree.js');
+import { router, db, users_ref, store } from '../main.js'
 
 export default {
     mounted() {
@@ -116,6 +117,12 @@ export default {
                 { value: 'long', text: "long term" }
             ]
         }
+    },
+    beforeMount() {
+      let access_token = store.state.current_user.access_token
+      if (!access_token || access_token == "undefined") {
+        router.push({ name: "home" })
+      }
     },
     methods: {
         init(){
@@ -438,10 +445,21 @@ export default {
                 headers: {
                     'Authorization': 'Bearer ' + this.access_token
                 },
-            }).then(raw_data => {
-                return raw_data.json();
+            }).then(response => {
+              if (response.status == 401) {
+                // Most likely 1 hour timeout on access token
+                return 401
+              }
+              else return response.json();
             }).then(data => {
-                this.artists_short = data;
+              // Catch 401 Unauthorized error
+              if (data == 401) {
+                // TODO: configure REFRESH_URL within Heroku
+                window.location = process.env.REFRESH_URL || "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token;
+                return
+              }
+
+              this.artists_short = data;
             });
 
             // top artists in medium term

@@ -1,11 +1,6 @@
 <template>
   <b-container>
-    <transition name="fade">
-    <h1 v-if="profile">
-      Welcome home, {{ profile.display_name }}!
-    </h1>
-    </transition>
-
+    <br/>
     <b-jumbotron bg-variant="success" text-variant="white" border-variant="dark">
       <template slot="header">
         <router-link v-bind:to="'top_tracks_artists'">Top Tracks & Artists</router-link>
@@ -116,62 +111,74 @@ export default {
         headers: {
             'Authorization': 'Bearer ' + access_token
         },
-    }).then(raw_data => {
-        return raw_data.json();
-    }).then(data => {
-        this.profile = data;
-
-        // Store access_token and refresh_token token
-        if (typeof(Storage) !== "undefined") {
-          localStorage.setItem("access_token", access_token)
-          localStorage.setItem("refresh_token", refresh_token)
+    }).then(response => {
+        if (response.status == 401) {
+          // Most likely 1 hour timeout on access token
+          return 401
         }
+        else return response.json();
+    }).then(data => {
+
+      // Catch 401 Unauthorized error
+      if (data == 401) {
+        // TODO: configure REFRESH_URL within Heroku
+        window.location = process.env.REFRESH_URL || "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token;
+        return
+      }
+
+      this.profile = data;
+
+      // Store access_token and refresh_token token
+      if (typeof(Storage) !== "undefined") {
+        localStorage.setItem("access_token", access_token)
+        if (refresh_token && refresh_token !== "undefined") localStorage.setItem("refresh_token", refresh_token)
+      }
 
 
-        // Update users db in Firebase
-        db.ref("/users/" + data.id).once("value").then(function(snapshot) {
+      // Update users db in Firebase
+      db.ref("/users/" + data.id).once("value").then(function(snapshot) {
 
-          if (!snapshot.val()) {
-            // New user
-            let new_user = {
-              spotify_id: data.id,
-              display_name: data.display_name,
-              profile_picture : data.images[0].url,
-              role: "user",
-              country: data.country,
-              product: data.product,
-              followers: data.followers.total,
-              access_token: access_token,
-              refresh_token: refresh_token
-            }
-
-            db.ref("/users/" + data.id).set(new_user)
-
-            // Update current user for App.vue
-            store.commit("updateCurrentUser", new_user)
-
+        if (!snapshot.val()) {
+          // New user
+          let new_user = {
+            spotify_id: data.id,
+            display_name: data.display_name,
+            profile_picture : data.images[0].url,
+            role: "user",
+            country: data.country,
+            product: data.product,
+            followers: data.followers.total,
+            access_token: access_token,
+            refresh_token: refresh_token
           }
-          else {
-            console.log("> User " + snapshot.val().display_name + " (" + data.id + ") exists; updated profile info");
-            // Existing user
 
-            db.ref("/users/" + data.id).update({
-              spotify_id: data.id,
-              display_name: data.display_name,
-              profile_picture : data.images[0].url,
-              // Don't update role here
-              country: data.country,
-              product: data.product,
-              followers: data.followers.total,
-              access_token: access_token,
-              refresh_token: refresh_token
-            })
+          db.ref("/users/" + data.id).set(new_user)
 
-            // Update current user for App.vue
-            store.commit("updateCurrentUser", snapshot.val())
+          // Update current user for App.vue
+          store.commit("updateCurrentUser", new_user)
 
-          }
-        })
+        }
+        else {
+          console.log("> User " + snapshot.val().display_name + " (" + data.id + ") exists; updated profile info");
+          // Existing user
+
+          db.ref("/users/" + data.id).update({
+            spotify_id: data.id,
+            display_name: data.display_name,
+            profile_picture : data.images[0].url,
+            // Don't update role here
+            country: data.country,
+            product: data.product,
+            followers: data.followers.total,
+            access_token: access_token,
+            refresh_token: refresh_token
+          })
+
+          // Update current user for App.vue
+          store.commit("updateCurrentUser", snapshot.val())
+
+        }
+      })
 
     })
 

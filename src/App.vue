@@ -3,7 +3,7 @@
 
     <b-navbar sticky v-if="current_role !== 'guest'" toggleable="sm" type="dark" variant="dark">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand id="logo" v-on:click="goHome">Motif</b-navbar-brand>
+      <b-navbar-brand v-on:click="goHome"><img id="logo" src="./assets/motif_logo.png"></b-navbar-brand>
 
       <b-collapse is-nav id="nav_collapse">
 
@@ -99,14 +99,11 @@ export default {
 
 <style>
 #app {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Avenir', sans-serif;
     text-align: center;
 }
 
-#options {
-    margin-top: 30px;
-    width: 30%;
-}
+
 
 a {
   color: Black;
@@ -116,8 +113,15 @@ a:hover {
   color: White;
 }
 
+#logo{
+  max-width: 100px;
+  max-height: 40px;
+  opacity: 0.85;
+}
+
 #logo:hover {
   cursor: pointer;
+  opacity: 1;
 }
 
 #profile_picture {
