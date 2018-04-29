@@ -3,7 +3,8 @@
 
     <b-navbar sticky v-if="current_role !== 'guest'" toggleable="sm" type="light" variant="light">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand v-on:click="goHome"><img id="logo" src="./assets/motif_logo.png" alt="Motif Logo"></b-navbar-brand>
+      <!-- <b-navbar-brand v-on:click="goHome"><img id="logo" src="./assets/motif_logo.png" alt="Motif Logo"></b-navbar-brand> -->
+      <b-navbar-brand v-on:click="goHome"><img id="logo" :src="require('./assets/motif_logo.png')" alt="Motif Logo" draggable=false /></b-navbar-brand>
 
       <b-collapse is-nav id="nav_collapse">
         <!-- Right aligned nav items -->

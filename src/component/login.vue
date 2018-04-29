@@ -3,7 +3,8 @@
         <div id="graph">
         </div>
         <div id="overlay_login">
-          <img id="main_logo" src="../assets/motif_logo.png" alt="Motif Logo" draggable=false>
+          <!-- <img id="main_logo" src="../assets/motif_logo.png" alt="Motif Logo" draggable=false> -->
+          <img id="main_logo" :src="require('../assets/motif_logo.png')" alt="Motif Logo" draggable=false />
           <h4>Wakanda music you listening to?</h4>
           <b-button id="login" class="btn-success" @click="sign_in">
             Log In With Spotify <i class="fab fa-spotify"></i>

@@ -31,7 +31,7 @@ Vue.use(Vuex)
 
 // Initialize Firebase
 var config = {
-  apiKey: process.env.FIREBASE_API_KEY || "",
+  apiKey: process.env.FIREBASE_API_KEY || "AIzaSyB6mswJr-ahMmVpumf6HockOivbw0k_yxc",
   authDomain: "motif-290.firebaseapp.com",
   databaseURL: "https://motif-290.firebaseio.com",
   projectId: "motif-290",

@@ -1,6 +1,7 @@
 <template>
     <b-container>
-      <img id="brand" src="../assets/motif_logo.png">
+      <!-- <img id="brand" src="../assets/motif_logo.png"> -->
+      <img id="brand" :src="require('../assets/motif_logo.png')" alt="Motif Logo" />
       <b-card>
         <h5>
           Motif was - and is being - developed by Kevin Cheng and Elbert Wang, two undergraduate students at Duke University, for their final project in <a href="https://www2.cs.duke.edu/courses/compsci290.2/spring18/">CS290: Web Application Development.</a>
