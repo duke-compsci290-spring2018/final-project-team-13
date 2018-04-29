@@ -46,8 +46,6 @@ import queryString from 'query-string';
 import { router, db, users_ref, store } from '../main.js'
 import $ from 'jquery'
 
-const REFRESH_URL = process.env.REFRESH_URL
-
 export default {
   name: 'home',
   data () {
@@ -128,8 +126,9 @@ export default {
 
         // Catch 401 Unauthorized error
         if (data == 401) {
-          if (REFRESH_URL) window.location = REFRESH_URL + store.state.current_user.refresh_token
-          else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
+          if (process.env.REFRESH_URL) window.location = process.env.REFRESH_URL + store.state.current_user.refresh_token
+          else window.location = "https://motif-backend-server.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
+          // else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
           return
         }
         this.profile = data;
@@ -143,13 +142,16 @@ export default {
 
         // Update users db in Firebase
         db.ref("/users/" + data.id).once("value").then(function(snapshot) {
+          let profile_url = ""
 
           if (!snapshot.val()) {
+            if (data.images.length > 0) profile_url = data.images[0].url
+
             // New user
             let new_user = {
               spotify_id: data.id,
               display_name: data.display_name,
-              profile_picture : data.images[0].url,
+              profile_picture : profile_url,
               profile_url: data.external_urls.spotify,
               role: "user",
               country: data.country,
@@ -173,7 +175,7 @@ export default {
             db.ref("/users/" + data.id).update({
               spotify_id: data.id,
               display_name: data.display_name,
-              profile_picture : data.images[0].url,
+              profile_picture : profile_url,
               profile_url: data.external_urls.spotify,
               // Don't update role here
               country: data.country,

@@ -21,7 +21,8 @@
         </b-row>
 
          <b-card-group columns id="feature_cards" v-if="avg_features != null">
-           <b-card v-for="feat in avg_features[dataset_index]"
+           <b-card v-for="feat, index in avg_features[dataset_index]"
+                  :key="index"
                   :title="feat.type"
                   :sub-title="feat.point">
                 <p class="card-text">
@@ -38,8 +39,6 @@
 
 <script>
 import { router, db, users_ref, store } from '../main.js'
-
-const REFRESH_URL = process.env.REFRESH_URL
 
 export default {
   name: "average_audio_features",
@@ -132,8 +131,9 @@ export default {
       }).then(data => {
           // Catch 401 Unauthorized error
           if (data == 401) {
-            if (REFRESH_URL) window.location = REFRESH_URL + store.state.current_user.refresh_token
-            else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
+            if (process.env.REFRESH_URL) window.location = process.env.REFRESH_URL + store.state.current_user.refresh_token
+            else window.location = "https://motif-backend-server.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
+            // else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
             return
           }
 

@@ -48,7 +48,6 @@
 import queryString from 'query-string';
 import { router, db, users_ref, store } from '../main.js'
 
-const REFRESH_URL = process.env.REFRESH_URL
 
 export default {
   name: 'top_tracks_artists',
@@ -172,8 +171,9 @@ export default {
       }).then(data => {
         // Catch 401 Unauthorized error
         if (data == 401) {
-          if (REFRESH_URL) window.location = REFRESH_URL + store.state.current_user.refresh_token
-          else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
+          if (process.env.REFRESH_URL) window.location = process.env.REFRESH_URL + store.state.current_user.refresh_token
+          else window.location = "https://motif-backend-server.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
+          // else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
           return
         }
 

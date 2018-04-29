@@ -45,6 +45,9 @@ export default {
             // console.log("> Updated current user from localStorage!")
             router.push({ name: "home" })
           }
+          else {
+            this.login_ready = true
+          }
         })
       })
     }
@@ -60,7 +63,8 @@ export default {
   methods: {
     sign_in() {
           // redirect to login window in the backend
-          window.location = process.env.LOGIN_URL
+          if (process.env.LOGIN_URL) window.location = process.env.LOGIN_URL
+          else window.location = "https://motif-backend-server.herokuapp.com/login?show_dialog=true"
           // || "http://localhost:8888/login" + "?show_dialog=true";
     },
     clear_id() {
