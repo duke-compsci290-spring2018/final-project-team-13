@@ -51,16 +51,17 @@ export default {
   },
   computed: {
       current_role() {
-        return store.state.current_user.role
+        db.ref("/users/" + store.state.current_user.spotify_id).once("value").then(function(snapshot) {
+          store.commit("updateCurrentRole", snapshot.val().role)
+          return snapshot.val().role
+        })
       },
       profile_picture() {
         return store.state.current_user.profile_picture
       }
   },
   watch: {
-    current_role(role) {
-      store.commit("updateCurrentRole", role)
-    }
+
   },
   methods: {
     goHome() {
@@ -126,15 +127,10 @@ export default {
 
     }
   },
-  created() {
-    db.ref("/users/" + store.state.current_user.spotify_id).on("child_changed", function(snapshot) {
-      console.log(snapshot.val())
-      store.state.current_user.role = snapshot.val().role
-      store.state.current_user.background = snapshot.val().background
-    })
+  mounted() {
+
   },
   updated() {
-    this.updateBG()
   }
 }
 </script>

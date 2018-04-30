@@ -16,8 +16,8 @@
              <!-- load and reload -->
              <b-col>
                <div id="load">
-                   <b-button v-if="artists_loaded && load_graph_condition" class="btn-success" @click="init">Load Graph</b-button>
-                   <b-button v-if="artists_loaded && reload_graph_condition" class="btn-info" @click="init">Reload Graph</b-button>
+                   <b-button v-if="artists_loaded && load_graph_condition" class="btn-success" v-on:click="init">Load Graph</b-button>
+                   <b-button v-if="artists_loaded && reload_graph_condition" class="btn-info" v-on:click="init">Reload Graph</b-button>
                </div>
              </b-col>
             <!-- modify the graph -->

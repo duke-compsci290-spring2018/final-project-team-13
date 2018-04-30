@@ -66,6 +66,32 @@ export default {
   methods: {
     updateCurrentUser(user) {
       store.commit('updateCurrentUser', user)
+    },
+    updateBG() {
+      let bg = store.state.current_user.background
+
+      if (bg == 1) {
+        $("body").css({
+          "background": "#ED4264", /* fallback for old browsers */
+          "background": "-webkit-linear-gradient(to top, #FFEDBC, #ED4264)", /* Chrome 10-25, Safari 5.1-6 */
+          "background": "linear-gradient(to top, #FFEDBC, #ED4264)", /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+          "background-attachment": "fixed"
+        })
+      }
+      else if (bg == 2) {
+        $("body").css({
+          "background": "#74ebd5", /* fallback for old browsers */
+          "background": "-webkit-linear-gradient(to bottom, #ACB6E5, #74ebd5)", /* Chrome 10-25, Safari 5.1-6 */
+          "background": "linear-gradient(to bottom, #ACB6E5, #74ebd5)", /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+          "background-attachment": "fixed"
+        });
+      }
+      else {
+        $("body").css({
+          "background": "#e6e6e6"
+        });
+      }
+
     }
   },
 
@@ -75,6 +101,8 @@ export default {
     let parsed = queryString.parse(window.location.search);
     let access_token = parsed.access_token;
     let refresh_token = parsed.refresh_token;
+
+    let updateBGFunction = this.updateBG()
 
     // if no access token in url
     if (!access_token || access_token == "undefined") {
@@ -95,11 +123,13 @@ export default {
           // Get current user info from firebase by searching for access token and refresh token
           users_ref.once("value").then(function(snapshot) {
             snapshot.forEach(child => {
-              if (access_token == child.val().access_token && refresh_token == child.val().refresh_token) {
+              if (child.val().access_token && access_token == child.val().access_token && child.val().refresh_token && refresh_token == child.val().refresh_token) {
                 store.commit("updateCurrentUser", child.val())
                 // console.log("> Updated current user from localStorage!")
               }
+              else console.log("no user found in firebase!")
             })
+            updateBGFunction()
           })
         }
         else {
@@ -159,7 +189,7 @@ export default {
               followers: data.followers.total,
               access_token: access_token,
               refresh_token: refresh_token,
-              background: ""
+              background: "0"
             }
 
             db.ref("/users/" + data.id).set(new_user)
@@ -203,6 +233,8 @@ export default {
     }
 
   },
+  mounted() {
+  }
 }
 
 </script>
