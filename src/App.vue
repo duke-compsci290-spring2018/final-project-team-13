@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <b-navbar sticky v-if="current_role !== 'guest'" toggleable="sm" type="light" variant="light">
+    <b-navbar sticky v-show="current_role !== 'guest'" toggleable="sm" type="light" variant="light">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <!-- <b-navbar-brand v-on:click="goHome"><img id="logo" src="./assets/motif_logo.png" alt="Motif Logo"></b-navbar-brand> -->
       <b-navbar-brand v-on:click="goHome"><img id="logo" :src="require('./assets/motif_logo.png')" alt="Motif Logo" draggable=false /></b-navbar-brand>
@@ -12,12 +12,12 @@
           <div>
             <b-img rounded="circle" id="profile_picture" :src="profile_picture" alt="NoPic"></b-img>
           </div>
-          <b-nav-item-dropdown right v-if="current_role == 'user' || current_role == 'admin'">
+          <b-nav-item-dropdown right v-show="current_role !== 'guest'">
             <!-- Using button-content slot -->
             <template slot="button-content">
               <i class="fas fa-cog"></i>
             </template>
-            <b-dropdown-item id="admin" v-if="current_role == 'admin'" v-on:click="goAdmin">👑Admin Page</b-dropdown-item>
+            <b-dropdown-item id="admin" v-show="current_role == 'admin'" v-on:click="goAdmin">👑Admin Page</b-dropdown-item>
             <b-dropdown-item v-on:click="goProfile">My Profile</b-dropdown-item>
             <b-dropdown-item v-on:click="refreshToken">Refresh Access Token</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
@@ -45,23 +45,24 @@ import $ from 'jquery'
 
 export default {
   name: 'app',
+  firebase() {
+    return {
+      users: users_ref,
+    }
+  },
   data () {
     return {
     }
   },
   computed: {
       current_role() {
-        db.ref("/users/" + store.state.current_user.spotify_id).once("value").then(function(snapshot) {
-          store.commit("updateCurrentRole", snapshot.val().role)
-          return snapshot.val().role
-        })
+        return store.state.current_user.role
       },
       profile_picture() {
         return store.state.current_user.profile_picture
       }
   },
   watch: {
-
   },
   methods: {
     goHome() {
@@ -99,38 +100,50 @@ export default {
       // else window.location = "https://motif-backend-server.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
       else window.location = "https://testserver290.herokuapp.com/refresh?refresh_token=" + store.state.current_user.refresh_token
       // else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
-    },
-    updateBG() {
-      let bg = store.state.current_user.background
-
-      if (bg == 1) {
-        $("body").css({
-          "background": "#ED4264", /* fallback for old browsers */
-          "background": "-webkit-linear-gradient(to top, #FFEDBC, #ED4264)", /* Chrome 10-25, Safari 5.1-6 */
-          "background": "linear-gradient(to top, #FFEDBC, #ED4264)", /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-          "background-attachment": "fixed"
-        })
-      }
-      else if (bg == 2) {
-        $("body").css({
-          "background": "#74ebd5", /* fallback for old browsers */
-          "background": "-webkit-linear-gradient(to bottom, #ACB6E5, #74ebd5)", /* Chrome 10-25, Safari 5.1-6 */
-          "background": "linear-gradient(to bottom, #ACB6E5, #74ebd5)", /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-          "background-attachment": "fixed"
-        });
-      }
-      else {
-        $("body").css({
-          "background": "#e6e6e6"
-        });
-      }
-
     }
   },
   mounted() {
 
   },
   updated() {
+    // Update background color from firebase
+    let my_id = store.state.current_user.spotify_id
+    let bg = "0"
+
+    if (my_id) {
+      users_ref.child(my_id).once("value").then(function(snapshot) {
+        bg =  snapshot.val().background
+
+        if (bg == 1) {
+          $("body").css({
+            "background": "#ED4264", /* fallback for old browsers */
+            "background": "-webkit-linear-gradient(to top, #FFEDBC, #ED4264)", /* Chrome 10-25, Safari 5.1-6 */
+            "background": "linear-gradient(to top, #FFEDBC, #ED4264)", /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            "background-attachment": "fixed"
+          })
+        }
+        else if (bg == 2) {
+          $("body").css({
+            "background": "#74ebd5", /* fallback for old browsers */
+            "background": "-webkit-linear-gradient(to bottom, #ACB6E5, #74ebd5)", /* Chrome 10-25, Safari 5.1-6 */
+            "background": "linear-gradient(to bottom, #ACB6E5, #74ebd5)", /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            "background-attachment": "fixed"
+          })
+        }
+        else {
+          $("body").css({
+            "background": "#e6e6e6"
+          })
+        }
+
+
+      })
+
+    }
+
+
+
+
   }
 }
 </script>

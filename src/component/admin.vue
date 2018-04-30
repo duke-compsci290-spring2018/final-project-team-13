@@ -58,6 +58,19 @@ export default {
         ],
       }
     },
+    beforeRouteEnter (to, from, next) {
+      // called before the route that renders this component is confirmed.
+      // does NOT have access to `this` component instance,
+      // because it has not been created yet when this guard is called!
+      let current_user = store.state.current_user
+      if (current_user && current_user.role == "admin") {
+        console.log("welcome admin " + store.state.current_user.display_name)
+        next()
+      }
+      else {
+        router.push({ name: "login" })
+      }
+    },
     computed: {
       items() {
         let table = [];
