@@ -62,8 +62,8 @@ export default {
           // redirect to login window in the backend
           if (process.env.LOGIN_URL) window.location = process.env.LOGIN_URL
           // else window.location = "https://motif-backend-server.herokuapp.com/login?show_dialog=true"
-          // else window.location = "https://testserver290.herokuapp.com/login?show_dialog=true"
-          else window.location = "http://localhost:8888/login" + "?show_dialog=true";
+          else window.location = "https://testserver290.herokuapp.com/login?show_dialog=true"
+          // else window.location = "http://localhost:8888/login" + "?show_dialog=true";
     },
     clear_id() {
         if(localStorage.getItem("user_id") !== undefined) localStorage.removeItem("user_id");
