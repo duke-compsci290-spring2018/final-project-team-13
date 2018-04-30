@@ -10,7 +10,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <div>
-            <img id="profile_picture" :src="profile_picture" alt="NoPic">
+            <b-img rounded="circle" id="profile_picture" :src="profile_picture" alt="NoPic"></b-img>
           </div>
           <b-nav-item-dropdown right v-if="current_role == 'user' || current_role == 'admin'">
             <!-- Using button-content slot -->
@@ -128,6 +128,7 @@ export default {
   },
   created() {
     db.ref("/users/" + store.state.current_user.spotify_id).on("child_changed", function(snapshot) {
+      console.log(snapshot.val())
       store.state.current_user.role = snapshot.val().role
       store.state.current_user.background = snapshot.val().background
     })
@@ -180,9 +181,8 @@ b-navbar {
 #profile_picture {
   max-width: 40px;
   max-height: 40px;
-  border: 1px solid Black;
-  border-radius: 50%;
   display: inline;
+  border: 2px solid Black;
 }
 
 #admin {

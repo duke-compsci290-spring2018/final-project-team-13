@@ -1,6 +1,7 @@
 <template>
     <b-container v-if="profile">
-      <h1>{{ profile.display_name }}'s Profile</h1>
+      <h1 v-if="profile.display_name">{{ profile.display_name }}'s Profile</h1>
+      <h1 v-if="!profile.display_name">Your Profile</h1>
       <img id="profile_image" :src="profile.profile_picture" alt="No Profile Picture">
       <ul id="profile_info">
         <li>

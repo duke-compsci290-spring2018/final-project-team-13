@@ -14,6 +14,8 @@ npm run build
 
 ## Instructions to Run Local Server
 
+We've already hard-coded the client id and secrets, so just run the last line.
+
 ``` bash
 # provide the environment with Spotify Client ID and SECRET
 
@@ -26,9 +28,11 @@ echo $SPOTIFY_CLIENT_ID SPOTIFY_CLIENT_ID
 echo $SPOTIFY_CLIENT_SECRET SPOTIFY_CLIENT_SECRET
 
 # start the back end server
-npm run start
+npm run start-backend
 
 ```
+
+We've already hard-coded the api key so just run the last line.
 
 ## Instructions to Run Local Client
 

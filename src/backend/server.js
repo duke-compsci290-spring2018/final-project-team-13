@@ -5,16 +5,15 @@ let querystring = require('querystring')
 let app = express()
 
 let redirect_uri =
-  process.env.REDIRECT_URI ||
-  'http://localhost:8888/callback'
+  "http://localhost:8888/callback" ||
+  'https://testserver290.herokuapp.com/callback'
 
 app.get('/login', function(req, res) {
-  let show_dialog = req.query.show_dialog || false
-  console.log("> Login request; show_dialog: " + show_dialog)
+  var show_dialog = req.query.show_dialog || false
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
-      client_id: process.env.SPOTIFY_CLIENT_ID,
+      client_id: "c5b9f69e59c04021b19c43afcf3336ca",
       scope: 'user-read-private playlist-read-private user-top-read user-library-read user-follow-read',
       redirect_uri,
       show_dialog: show_dialog
@@ -32,14 +31,14 @@ app.get('/refresh', function(req, res) {
     },
     headers: {
       'Authorization': 'Basic ' + (new Buffer(
-        process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET
+       "c5b9f69e59c04021b19c43afcf3336ca" + ':' + "6f899828a4eb4ff6bee73f069392a0be"
       ).toString('base64'))
     },
     json: true
   }
   request.post(authOptions, function(error, response, body) {
     var access_token = body.access_token
-    let uri = process.env.FRONTEND_URI || 'http://localhost:8080/home'
+    let uri = "https://motif-290.firebaseapp.com/home"
     res.redirect(uri + '?access_token=' + access_token + '&refresh_token=' + refresh_token)
   })
 })
@@ -55,7 +54,8 @@ app.get('/callback', function(req, res) {
     },
     headers: {
       'Authorization': 'Basic ' + (new Buffer(
-        process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET
+        "c5b9f69e59c04021b19c43afcf3336ca" + ':' + "6f899828a4eb4ff6bee73f069392a0be"
+
       ).toString('base64'))
     },
     json: true
@@ -63,7 +63,7 @@ app.get('/callback', function(req, res) {
   request.post(authOptions, function(error, response, body) {
     var access_token = body.access_token
     var refresh_token = body.refresh_token
-    let uri = process.env.FRONTEND_URI || 'http://localhost:8080/home'
+    let uri = "http://localhost:8080/home" || "https://motif-290.firebaseapp.com/home"
     res.redirect(uri + '?access_token=' + access_token + '&refresh_token=' + refresh_token)
   })
 })

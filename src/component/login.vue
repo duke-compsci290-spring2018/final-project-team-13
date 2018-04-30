@@ -40,13 +40,10 @@ export default {
       // Get current user info from firebase by searching for access token and refresh token
       users_ref.once("value").then(function(snapshot) {
         snapshot.forEach(child => {
-          if (access_token == child.val().access_token && refresh_token == child.val().refresh_token) {
+          if (child.val().access_token && access_token == child.val().access_token && child.val().refresh_token && refresh_token == child.val().refresh_token) {
             store.commit("updateCurrentUser", child.val())
             // console.log("> Updated current user from localStorage!")
             router.push({ name: "home" })
-          }
-          else {
-            this.login_ready = true
           }
         })
       })
