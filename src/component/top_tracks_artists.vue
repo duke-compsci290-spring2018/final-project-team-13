@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import queryString from 'query-string';
+import queryString from 'query-string'
 import { router, db, users_ref, store } from '../main.js'
 
 
@@ -77,22 +77,22 @@ export default {
   },
   computed: {
     artists_ready: function() {
-        return this.top_artists_short && this.top_tracks_medium && this.top_tracks_long;
+        return this.top_artists_short && this.top_tracks_medium && this.top_tracks_long
     }
   },
   watch: {
     time_selected: function(val) {
         if (val === 'short') {
-            this.top_tracks_display = this.top_tracks_short;
-            this.top_artists_display = this.top_artists_short;
+            this.top_tracks_display = this.top_tracks_short
+            this.top_artists_display = this.top_artists_short
         }
         else if (val === 'medium') {
-            this.top_tracks_display = this.top_tracks_medium;
-            this.top_artists_display = this.top_artists_medium;
+            this.top_tracks_display = this.top_tracks_medium
+            this.top_artists_display = this.top_artists_medium
         }
         else {
-            this.top_tracks_display = this.top_tracks_long;
-            this.top_artists_display = this.top_artists_long;
+            this.top_tracks_display = this.top_tracks_long
+            this.top_artists_display = this.top_artists_long
         }
     }
   },
@@ -171,7 +171,7 @@ export default {
           // ?
           return 403
         }
-        else return response.json();
+        else return response.json()
       }).then(data => {
         // Catch 401 Unauthorized error
         if (data == 401) {
@@ -185,8 +185,8 @@ export default {
           router.push({ name: "top_tracks_artists"})
         }
 
-        this.top_artists_short = data;
-      });
+        this.top_artists_short = data
+      })
 
       // top artists in medium term
       await fetch('https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=20&offset=0' , {
@@ -195,10 +195,10 @@ export default {
               'Authorization': 'Bearer ' + access_token
           },
       }).then(raw_data => {
-          return raw_data.json();
+          return raw_data.json()
       }).then(data => {
-          this.top_artists_medium = data;
-      });
+          this.top_artists_medium = data
+      })
 
       // top artists in long term
       await fetch('https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=20&offset=0' , {
@@ -207,10 +207,10 @@ export default {
               'Authorization': 'Bearer ' + access_token
           },
       }).then(raw_data => {
-          return raw_data.json();
+          return raw_data.json()
       }).then(data => {
-          this.top_artists_long = data;
-      });
+          this.top_artists_long = data
+      })
 
       // top tracks in short term
       await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=20&offset=0' , {
@@ -219,9 +219,9 @@ export default {
               'Authorization': 'Bearer ' + access_token
           },
       }).then(raw_data => {
-          return raw_data.json();
+          return raw_data.json()
       }).then(data => {
-          this.top_tracks_short = data;
+          this.top_tracks_short = data
 
           let song_ids = ""
           data.items.forEach(item => {
@@ -247,7 +247,7 @@ export default {
               })
             })
           })
-      });
+      })
 
       // top tracks in medium term
       await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=20&offset=0' , {
@@ -256,9 +256,9 @@ export default {
               'Authorization': 'Bearer ' + access_token
           },
       }).then(raw_data => {
-          return raw_data.json();
+          return raw_data.json()
       }).then(data => {
-          this.top_tracks_medium = data;
+          this.top_tracks_medium = data
 
           let song_ids = ""
           data.items.forEach(item => {
@@ -284,7 +284,7 @@ export default {
               })
             })
           })
-      });
+      })
 
       // top tracks in long term
       await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=20&offset=0' , {
@@ -293,9 +293,9 @@ export default {
               'Authorization': 'Bearer ' + access_token
           },
       }).then(raw_data => {
-          return raw_data.json();
+          return raw_data.json()
       }).then(data => {
-          this.top_tracks_long = data;
+          this.top_tracks_long = data
 
           let song_ids = ""
           data.items.forEach(item => {
@@ -321,9 +321,9 @@ export default {
               })
             })
           })
-      });
+      })
 
-      this.all_loaded = true;
+      this.all_loaded = true
     }
   },
   beforeMount() {

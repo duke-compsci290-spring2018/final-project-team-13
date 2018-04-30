@@ -73,7 +73,7 @@ export default {
     },
     computed: {
       items() {
-        let table = [];
+        let table = []
         this.users.forEach(user => {
 
           let id = user['.key']
@@ -89,16 +89,16 @@ export default {
           }
 
           // Exclude current admin from showing up in the table
-          if (id !== store.state.current_user.spotify_id) table.push(item);
+          if (id !== store.state.current_user.spotify_id) table.push(item)
         })
-        return table;
+        return table
       }
     },
     methods: {
       remove_user(user) {
-        let id = user.item.id;
-        let name = user.item.name;
-        let index = user.index;
+        let id = user.item.id
+        let name = user.item.name
+        let index = user.index
         users_ref.child(id).once("value").then(snapshot => {
           let exists = snapshot.val() !== null
           if(exists) {
@@ -112,16 +112,16 @@ export default {
         })
       },
       adjust_role(user) {
-        let id = user.item.id;
-        let name = user.item.name;
-        let role = user.item.role;
+        let id = user.item.id
+        let name = user.item.name
+        let role = user.item.role
         users_ref.child(id).once("value").then(snapshot => {
           let exists = snapshot.val() !== null
           if(exists) {
             if(snapshot.child('role').val() === role) {
               var c = confirm("Are you sure to "+this.promote_demote(role)+" "+ name+"?")
               if(c) {
-                let new_role = role === 'user' ? 'admin' : 'user';
+                let new_role = role === 'user' ? 'admin' : 'user'
                 snapshot.ref.update({
                   role: new_role
                 })

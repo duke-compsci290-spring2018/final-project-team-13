@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import queryString from 'query-string';
+import queryString from 'query-string'
 import { router, db, users_ref, store } from '../main.js'
 import $ from 'jquery'
 
@@ -72,9 +72,9 @@ export default {
   beforeMount() {
     this.all_loaded = false
     // parse the access token from the window
-    let parsed = queryString.parse(window.location.search);
-    let access_token = parsed.access_token;
-    let refresh_token = parsed.refresh_token;
+    let parsed = queryString.parse(window.location.search)
+    let access_token = parsed.access_token
+    let refresh_token = parsed.refresh_token
 
     // if no access token in url
     if (!access_token || access_token == "undefined") {
@@ -122,7 +122,7 @@ export default {
             // Most likely 1 hour timeout on access token
             return 401
           }
-          else return response.json();
+          else return response.json()
       }).then(data => {
 
         // Catch 401 Unauthorized error
@@ -133,7 +133,7 @@ export default {
           // else window.location = "http://localhost:8888/refresh?refresh_token=" + store.state.current_user.refresh_token
           return
         }
-        this.profile = data;
+        this.profile = data
 
         // Store access_token and refresh_token token
         if (typeof(Storage) !== "undefined") {
@@ -170,7 +170,7 @@ export default {
 
           }
           else {
-            // console.log("> User " + snapshot.val().display_name + " (" + data.id + ") exists; updated profile info");
+            // console.log("> User " + snapshot.val().display_name + " (" + data.id + ") exists updated profile info")
             // Existing user
 
             db.ref("/users/" + data.id).update({

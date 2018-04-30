@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import vis from 'vis';
+import vis from 'vis'
 import { router, db, users_ref, store } from '../main.js'
 
 export default {
@@ -63,16 +63,16 @@ export default {
           if (process.env.LOGIN_URL) window.location = process.env.LOGIN_URL
           // else window.location = "https://motif-backend-server.herokuapp.com/login?show_dialog=true"
           else window.location = "https://testserver290.herokuapp.com/login?show_dialog=true"
-          // else window.location = "http://localhost:8888/login" + "?show_dialog=true";
+          // else window.location = "http://localhost:8888/login" + "?show_dialog=true"
     },
     clear_id() {
-        if(localStorage.getItem("user_id") !== undefined) localStorage.removeItem("user_id");
+        if(localStorage.getItem("user_id") !== undefined) localStorage.removeItem("user_id")
     },
     sample_graph() {
 
-        let all_nodes = new vis.DataSet();
-        let all_edges = new vis.DataSet();
-        let container = document.getElementById('graph');
+        let all_nodes = new vis.DataSet()
+        let all_edges = new vis.DataSet()
+        let container = document.getElementById('graph')
         let options = {
             nodes: {
                 mass: 1,
@@ -150,7 +150,7 @@ export default {
                   }
               }
             }
-        };
+        }
 
         all_nodes.add([
             {id: "1", label: "21 Savage", shape: "circularImage", image: "https://i.scdn.co/image/d664edbc9c83c443a56a5d97a44a105e27c20d20", group: 'level0_node'},
@@ -202,9 +202,9 @@ export default {
             edges: all_edges,
         }
 
-        var network = new vis.Network(container, data, options);
+        var network = new vis.Network(container, data, options)
 
-        this.sample_graph_loaded = true;
+        this.sample_graph_loaded = true
     },
   }
 }

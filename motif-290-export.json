@@ -1,0 +1,107 @@
+{
+  "admin_password" : "duvallisthebestprofessor123",
+  "users" : {
+    "121238124" : {
+      "access_token" : "BQC2Uay8WxBiEPQ-5a-VCuQGBcxLx7t38P8pqpGgPUYo3pofQaRvSH09vEpwE_uAeRqvSbpC4FFjrMUHgS5A4lXD4PVtxECeW3OpTpvFzNIKSDkrix0Rkolo2cY_gFOzWYc48htw6sw5AFw4j99c7y2HplIuAd0O4wHA4ZNG6DTmRxNuaVm5",
+      "background" : "0",
+      "country" : "US",
+      "display_name" : "Duncan de Caire",
+      "followers" : 26,
+      "product" : "open",
+      "profile_picture" : "https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/29214276_1607327532677675_4682676725409120256_n.jpg?_nc_cat=0&oh=2e84d5cccc1396dec1ed7014ee9c173d&oe=5B6D3FF2",
+      "profile_url" : "https://open.spotify.com/user/121238124",
+      "refresh_token" : "AQDqT0B0AW3WDOuDNtft9653CgruT4jaXzfy00b6wWSFrD_2wVhIyGC_Do0gomLc_mtgZk_c1mY17IfIm3bBvvSE006odyFPWG3T3B3SZq0UcDAp_Q2tpH-OzVWlGtbobOg",
+      "role" : "user",
+      "spotify_id" : "121238124"
+    },
+    "1239569139" : {
+      "access_token" : "BQCr6QfaQfejPjxP_B3_auYwXHg_VvF_lW8FgJzbfEp11w3_BREuF_nrvgemHaYFwWT2G0F8dF3ZdsBcA1FVvj-KFFdlZobPHXgdNDxqhxP0u3aeZdwXlUuIDkfOWmj6Nud1WJV8RFOkovyfU9awo0VzG0VBwOs4PBGOwHacal9kgGmjk0ORTjYjZ4vQ",
+      "background" : 1,
+      "country" : "US",
+      "display_name" : "Elbert Wang",
+      "followers" : 51,
+      "product" : "premium",
+      "profile_picture" : "https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/14720388_10207681376651921_2520684238466016917_n.jpg?_nc_cat=0&oh=6fa9f0ee180a34069d1a69d47004d3d1&oe=5B690762",
+      "profile_url" : "https://open.spotify.com/user/1239569139",
+      "refresh_token" : "AQCoz5uuGpkQwRf09e4O5EF-aQ0d18NMhXcHveCGMNKOxCyYCBRJgWPR8W6yysfuOzXrjxOO5QMZ4uqbLU6Mz8lo1XaikaZG1fBO3beg2MPCiO19riSfpVTSYSR_xXC-A5A",
+      "role" : "admin",
+      "spotify_id" : "1239569139"
+    },
+    "1270902904" : {
+      "access_token" : "BQAJkleP9Cx-L6WJPP7C9cnyN5nTH7zLb8Aa2LACiD8kmJcrMmgOaRVIfVVD0J7Sa5N7ljIIVHo2MgxZHWddOxt3QieT2qEXXBLk_kjN3HJI0Bzo6jP8l5ODG97LekVcKLgZrcBWOaemj-v3lS33F1AW90abAGYKdJardfSUA8qUEA1IO0ZKIYPCkw",
+      "background" : "0",
+      "country" : "US",
+      "display_name" : "Eric Pei",
+      "followers" : 17,
+      "product" : "premium",
+      "profile_picture" : "https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/14906847_1177877522325041_3759519544849699561_n.jpg?_nc_cat=0&oh=24726c03d6b1aaafc698e25c3f2f7507&oe=5B50E735",
+      "profile_url" : "https://open.spotify.com/user/1270902904",
+      "refresh_token" : "AQDJAjUsftBm9PSp3xdVoiIm5UM2U7VNq8-aKgBkSJp70VGmS0khmHeUNdsb4w1kLoCnNUfby8wb6cknUf-9gscRIk8WD3GPETjgHmxZAYvjBD2-YWemv2mowHT2o5sTcgk",
+      "role" : "user",
+      "spotify_id" : "1270902904"
+    },
+    "21hac3g72hjuvx3bp2bxs4moq" : {
+      "access_token" : "BQAWmBE0BzXyGe_eqjWmN_6oDladpE6l9cRY-h4wKP7PcaONUNAbZIMz0vJe3jW9M6iqQjBz5AzZYkhy2tRppxqi0lePgwiL4rfRCIW31byU_2xLcaFqTjlWV27stZD4NlSGu6CX5LaXLNjp3iV-RyAQK6LaX8iEgsaqNaxv86SqNr1MSKYgAbibJqp0AvC6c76nRcgcGeDlKQ",
+      "background" : "0",
+      "country" : "SG",
+      "display_name" : "Ayden Sng",
+      "followers" : 11,
+      "product" : "premium",
+      "profile_picture" : "https://lookaside.facebook.com/platform/profilepic/?asid=10152118171224195&height=200&width=200&ext=1525040743&hash=AeRchd87asQTc17g",
+      "profile_url" : "https://open.spotify.com/user/21hac3g72hjuvx3bp2bxs4moq",
+      "refresh_token" : "AQDSpd5l2axEInqYBWizBWW98cbVnjyKn5hFE9MtNjYHTI1nL2RkK5eiVcUQ5gNwBNlmIi0t7YToRVCRZ4fSsTdHXlfXWdEfZ3--Mee-ZU_Q9cKdZdx1YGqAOuVrBEl9f_Y",
+      "role" : "user",
+      "spotify_id" : "21hac3g72hjuvx3bp2bxs4moq"
+    },
+    "222phoeqilwkjfc45ghspxdhq" : {
+      "access_token" : "BQASHRDJaxgv34B9RuDAcivX7Q1YNOnaAsgHrpZWOBCD366RqTN7gt3fAkB6Ycy9huQ4XcQRoqxrywPSEa3myhetWtInqsgnHZlGSj6v_5NF-WQLm3D2miTyBy5CLI7JIF3h1kpxaFbNpXVWuY2E6Pft2r6T4DJcDUt5JzUZ_HGMHLPXn0EduODDzJ1tafNGZOsSAm9UYQ",
+      "background" : 2,
+      "country" : "US",
+      "display_name" : "Krystal Xingya Zhai",
+      "followers" : 15,
+      "product" : "open",
+      "profile_picture" : "https://lookaside.facebook.com/platform/profilepic/?asid=629096860499450&height=200&width=200&ext=1525044050&hash=AeQb3XZgCOrEUQQA",
+      "profile_url" : "https://open.spotify.com/user/222phoeqilwkjfc45ghspxdhq",
+      "refresh_token" : "AQBWbW6lyh7ybYo4yMnpaJ_qTH9MF_u_KOF143ff5wDs-E4vj3Zn4RDKQKFIImom8ZHGiA8QjQ__swHGhWyinFdhnVVYuIRduZ1cWnHTa38hnUWIAGhglW54_vZa6eDBf1o",
+      "role" : "user",
+      "spotify_id" : "222phoeqilwkjfc45ghspxdhq"
+    },
+    "22uutuzpf36bh4jr76455lpta" : {
+      "access_token" : "BQCqunOG75E0Kv1TQZzfF2Nm88PqKztlEhKq_yEcsq7rIvgtf81ffl963iIVehPr-qZOg8nsc1pTT9-4wBn1pQRpPx5M9CPbxvBHr6LWBe2FQnDAmePzhML2PP49YOisQfZbyprma9udBwPE2tvTL-LqbtlQeWPxV8tmyuBVoaJB2mOymCvgGxbFlRkh6hjQk7diMLYi4oJWFg",
+      "background" : 2,
+      "country" : "US",
+      "followers" : 11,
+      "product" : "premium",
+      "profile_picture" : "https://profile-images.scdn.co/images/userprofile/default/f3e7770ab6e81483f5b6e60422feda8e5d438eeb",
+      "profile_url" : "https://open.spotify.com/user/22uutuzpf36bh4jr76455lpta",
+      "refresh_token" : "AQCRx5VoHx1Qp2Dhjnrx0q-Fr5kEYoJVckonnmjyb0rcSfUfxck-OxuiWe9v9YSqSKv0XzV4WqY_Wu2uucThZ6mlrIJB7wTZ06dRWjQDlHD_SreKmSB9v6EA2ifADIBS5N4",
+      "role" : "admin",
+      "spotify_id" : "22uutuzpf36bh4jr76455lpta"
+    },
+    "gabegold1" : {
+      "access_token" : "BQCqg2_Ue2sms6yXWOUT_J_qJrbMJCTmx9UBk7qMSI3G_eEiqw0lvCqDlsNXQMljlQ22su8wcnvHxTjiXALHtWyCkF6VNSRYHH_0xJ9dfKAnCLafgfpz1DIBc-9ikZy51SQWmzZ04cpLkPJotOfYesN_6LZJldHfNzg3QD0jM4w4Z7aaS9RTj8Wz",
+      "background" : "0",
+      "country" : "US",
+      "display_name" : "Gabriel Goldhagen",
+      "followers" : 1,
+      "product" : "premium",
+      "profile_picture" : "https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/30713391_960234477475589_5814033916482289664_n.jpg?_nc_cat=0&oh=72cd11575ca2f45882bb058fc5f7ead6&oe=5B692B42",
+      "profile_url" : "https://open.spotify.com/user/gabegold1",
+      "refresh_token" : "AQC6trBW4LC8XsXwuchDFIcFbixIMd6SSTKbQ0uTaOoRSLeEz8wYF2P0Llny91ia62zt3zDehRopa1OMptf2mLAMkjna4qyf7fKve4u9e77mpHrTsSghl7xSAC8lSX3KcoM",
+      "role" : "user",
+      "spotify_id" : "gabegold1"
+    },
+    "krystalzhai" : {
+      "access_token" : "BQBYxYv7EpSfhZSnwoo79yzHqBa_zdb9s2q5Hr2GCSblbDR-m20vLPLl0vAvSf4evcCoDIkfhpR4Bt3T2PuJaLFt1LWLz0vrS-xOf9r3JyKYX9aJzsU7C1cufImQdjd-QHW9q0leV2w80dHIQ8xr7b5bf1pbpujk_LWApPjXWRgl9L2c_qftj_RkPY8",
+      "background" : 2,
+      "country" : "US",
+      "followers" : 0,
+      "product" : "premium",
+      "profile_picture" : "",
+      "profile_url" : "https://open.spotify.com/user/krystalzhai",
+      "refresh_token" : "AQBlG2-z-6LcNnawh2wQIMfpeLl9Iy7CEQvUTAPhork7wx4ccc9-u4WHUrGaFi63ovVhF60t-tAVfVnSxf0BijnPeOwEt7zKctO8xpCDHoEOYhZw0_Nudw75pLSdI1tCifY",
+      "role" : "user",
+      "spotify_id" : "krystalzhai"
+    }
+  }
+}
