@@ -20,7 +20,7 @@
     "d3": "^5.0.0",
     "express": "^4.16.3",
     "firebase": "^4.13.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "querystring": "^0.2.0",
     "request": "^2.85.0",
     "spotify-web-api-node": "^3.0.0",
